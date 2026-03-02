@@ -70,7 +70,7 @@ function HomePage() {
 
   return (
     <section className="home-page">
-      <DrakeAvatar size={150} />
+      <DrakeAvatar size={220} className="home-dragon-banner" />
       <h1>Vibing with Drake</h1>
       <p className="home-tagline">AI vibe-coded apps — built with GitHub Copilot & good vibes ✨</p>
 
