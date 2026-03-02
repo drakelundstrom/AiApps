@@ -70,7 +70,7 @@ jobs:
       - name: deploy infrastructure
         run: |
           az deployment group create \
-            --resource-group 'OSUDemo' \
+            --resource-group 'FunAiApps' \
             --parameters './infra/main.bicepparam' \
             --parameters webAppName=${{ env.AZURE_WEBAPP_NAME }} appServicePlanName=${{ env.AZURE_APPSERVICE_PLAN }}
 
@@ -128,6 +128,6 @@ jobs:
         id: deploy-to-web-app
         run: |
           az webapp deployment source config-zip \
-            --resource-group 'OSUDemo' \
+            --resource-group 'FunAiApps' \
             --name ${{ env.AZURE_WEBAPP_NAME }} \
             --src ./website.zip
