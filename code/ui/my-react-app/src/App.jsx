@@ -1,11 +1,15 @@
 import { useState } from 'react'
 import { Link, NavLink, Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import FlappyBird from './FlappyBird'
+import JapaneseGarden from './JapaneseGarden'
+import ColorSudoku from './ColorSudoku'
 import './App.css'
 
 const NAV_ITEMS = [
   { to: '/home', label: 'Home' },
   { to: '/flappy-bird', label: 'Flappy Bird' },
+  { to: '/japanese-garden', label: 'Japanese Garden' },
+  { to: '/color-sudoku', label: 'Color Sudoku' },
   { to: '/legacy/fishy', label: 'Fishy (HTML/JS)' },
 ]
 
@@ -85,6 +89,8 @@ function App() {
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/flappy-bird" element={<FlappyBird />} />
+        <Route path="/japanese-garden" element={<JapaneseGarden />} />
+        <Route path="/color-sudoku" element={<ColorSudoku />} />
         <Route
           path="/legacy/fishy"
           element={<LegacyHtmlPage src="/legacy-pages/fishy/index.html" title="Fishy Game" />}
