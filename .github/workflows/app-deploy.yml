@@ -53,4 +53,4 @@ jobs:
           SWA_CLI_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           SWA_CLI_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           SWA_CLI_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-        run: swa deploy code/ui/my-react-app/dist --env production --no-build
+        run: swa deploy code/ui/my-react-app/dist --env production
