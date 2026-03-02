@@ -1,206 +1,167 @@
-/**
- * Cute animated avatar for Drake Lundstrom
- * — SVG-based, no external assets
- */
+import { useEffect, useState } from 'react'
+
 export default function DrakeAvatar({ size = 140 }) {
+  const [dragonMode, setDragonMode] = useState(false)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDragonMode((prev) => !prev)
+    }, 3200)
+
+    return () => clearInterval(timer)
+  }, [])
+
   return (
     <svg
-      viewBox="0 0 200 200"
+      viewBox="0 0 220 220"
       width={size}
       height={size}
       role="img"
-      aria-label="Drake Lundstrom avatar"
+      aria-label="Animated avatar of Drake that alternates between a person and a cute little dragon"
       style={{ display: 'block' }}
     >
       <defs>
-        {/* gradient for background circle */}
-        <linearGradient id="av-bg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#6366f1" />
-          <stop offset="100%" stopColor="#3b82f6" />
+        <linearGradient id="av-sky" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#8ad7ff" />
+          <stop offset="100%" stopColor="#4f9dff" />
         </linearGradient>
-
-        {/* subtle shadow filter */}
-        <filter id="av-shadow" x="-4%" y="-4%" width="108%" height="108%">
-          <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#000" floodOpacity="0.25" />
-        </filter>
-
-        {/* glow for the sparkle */}
-        <filter id="av-glow">
-          <feGaussianBlur stdDeviation="2" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
+        <linearGradient id="av-hair" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#d68945" />
+          <stop offset="100%" stopColor="#9a5528" />
+        </linearGradient>
+        <linearGradient id="av-shirt" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#77dbff" />
+          <stop offset="100%" stopColor="#43b9e8" />
+        </linearGradient>
+        <linearGradient id="av-dragon" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#8df19f" />
+          <stop offset="100%" stopColor="#49c57b" />
+        </linearGradient>
       </defs>
 
       <style>{`
-        /* blink animation */
-        @keyframes av-blink {
-          0%, 92%, 100% { transform: scaleY(1); }
-          95% { transform: scaleY(0.05); }
-        }
-        .av-eye {
-          animation: av-blink 3.5s ease-in-out infinite;
-          transform-origin: center;
-        }
-        .av-eye-r { animation-delay: 0.08s; }
-
-        /* gentle float */
-        @keyframes av-float {
-          0%, 100% { transform: translateY(0); }
+        @keyframes av-bob {
+          0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-4px); }
         }
-        .av-body { animation: av-float 4s ease-in-out infinite; }
 
-        /* wave hand */
-        @keyframes av-wave {
-          0%, 70%, 100% { transform: rotate(0deg); }
-          75% { transform: rotate(18deg); }
-          80% { transform: rotate(-8deg); }
-          85% { transform: rotate(14deg); }
-          90% { transform: rotate(-4deg); }
-          95% { transform: rotate(8deg); }
+        @keyframes av-blink {
+          0%, 92%, 100% { transform: scaleY(1); }
+          95% { transform: scaleY(0.08); }
         }
-        .av-hand { animation: av-wave 5s ease-in-out infinite; transform-origin: 148px 125px; }
 
-        /* sparkle twinkle */
-        @keyframes av-twinkle {
-          0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
-          50% { opacity: 1; transform: scale(1) rotate(180deg); }
+        @keyframes av-wiggle {
+          0%, 100% { transform: rotate(0deg); }
+          35% { transform: rotate(6deg); }
+          65% { transform: rotate(-6deg); }
         }
-        .av-sparkle { animation: av-twinkle 2.5s ease-in-out infinite; transform-origin: center; }
-        .av-sparkle-2 { animation-delay: 1.2s; }
 
-        /* color pulse on headphones */
-        @keyframes av-pulse {
-          0%, 100% { fill: #8b5cf6; }
-          50% { fill: #a78bfa; }
+        .av-root {
+          animation: av-bob 3.4s ease-in-out infinite;
+          transform-origin: 50% 55%;
         }
-        .av-headphones { animation: av-pulse 3s ease-in-out infinite; }
+
+        .av-eye {
+          animation: av-blink 3.2s ease-in-out infinite;
+          transform-origin: center;
+        }
+
+        .av-tail {
+          animation: av-wiggle 1.1s ease-in-out infinite;
+          transform-origin: 132px 162px;
+        }
+
+        .av-person,
+        .av-dragon {
+          transition: opacity 420ms ease, transform 420ms ease;
+          transform-box: fill-box;
+          transform-origin: center;
+        }
+
+        .av-person.hidden,
+        .av-dragon.hidden {
+          opacity: 0;
+          transform: scale(0.92);
+        }
+
+        .av-person.visible,
+        .av-dragon.visible {
+          opacity: 1;
+          transform: scale(1);
+        }
       `}</style>
 
-      {/* background circle */}
-      <circle cx="100" cy="100" r="96" fill="url(#av-bg)" />
+      <rect x="4" y="4" width="212" height="212" rx="56" fill="url(#av-sky)" />
 
-      {/* floating body group */}
-      <g className="av-body" filter="url(#av-shadow)">
-
-        {/* neck */}
-        <rect x="88" y="140" width="24" height="16" rx="4" fill="#f0c08a" />
-
-        {/* hoodie / torso */}
-        <path
-          d="M60 152 C60 142, 80 134, 100 134 C120 134, 140 142, 140 152 L140 200 L60 200 Z"
-          fill="#3b82f6"
-        />
-        {/* hoodie neckline */}
-        <path
-          d="M85 140 Q100 152, 115 140"
-          stroke="#2563eb"
-          strokeWidth="2"
-          fill="none"
-        />
-        {/* hoodie string */}
-        <line x1="95" y1="142" x2="93" y2="156" stroke="#e0e7ff" strokeWidth="1.2" strokeLinecap="round" />
-        <line x1="105" y1="142" x2="107" y2="156" stroke="#e0e7ff" strokeWidth="1.2" strokeLinecap="round" />
-        {/* MS logo on hoodie (simplified) */}
-        <g transform="translate(91, 158)">
-          <rect x="0" y="0" width="7" height="7" rx="1" fill="#f25022" />
-          <rect x="9" y="0" width="7" height="7" rx="1" fill="#7fba00" />
-          <rect x="0" y="9" width="7" height="7" rx="1" fill="#00a4ef" />
-          <rect x="9" y="9" width="7" height="7" rx="1" fill="#ffb900" />
-        </g>
-
-        {/* head */}
-        <ellipse cx="100" cy="100" rx="42" ry="46" fill="#f0c08a" />
-
-        {/* hair — short, friendly style */}
-        <path
-          d="M58 96 C56 68, 72 48, 100 46 C128 48, 144 68, 142 96
-             C142 80, 130 58, 100 56 C70 58, 58 80, 58 96 Z"
-          fill="#5c3a1e"
-        />
-        {/* hair top volume */}
-        <ellipse cx="100" cy="56" rx="34" ry="14" fill="#5c3a1e" />
-
-        {/* ears */}
-        <ellipse cx="58" cy="104" rx="8" ry="10" fill="#e8b07a" />
-        <ellipse cx="142" cy="104" rx="8" ry="10" fill="#e8b07a" />
-
-        {/* headphones band */}
-        <path
-          d="M56 100 Q56 56, 100 50 Q144 56, 144 100"
-          stroke="#7c3aed"
-          strokeWidth="5"
-          fill="none"
-          strokeLinecap="round"
-          className="av-headphones"
-          style={{ fill: 'none' }}
-        />
-        {/* headphone cups */}
-        <rect x="48" y="94" width="14" height="20" rx="5" className="av-headphones" />
-        <rect x="138" y="94" width="14" height="20" rx="5" className="av-headphones" />
-
-        {/* eyebrows */}
-        <path d="M78 84 Q84 79, 92 82" stroke="#5c3a1e" strokeWidth="2.2" fill="none" strokeLinecap="round" />
-        <path d="M108 82 Q116 79, 122 84" stroke="#5c3a1e" strokeWidth="2.2" fill="none" strokeLinecap="round" />
-
-        {/* eyes */}
-        <g className="av-eye">
-          <ellipse cx="85" cy="96" rx="7" ry="7.5" fill="#fff" />
-          <circle cx="86" cy="96" r="4.5" fill="#2d1b0e" />
-          <circle cx="88" cy="94" r="1.8" fill="#fff" />
-        </g>
-        <g className="av-eye av-eye-r">
-          <ellipse cx="115" cy="96" rx="7" ry="7.5" fill="#fff" />
-          <circle cx="116" cy="96" r="4.5" fill="#2d1b0e" />
-          <circle cx="118" cy="94" r="1.8" fill="#fff" />
-        </g>
-
-        {/* nose */}
-        <path d="M98 104 Q100 108, 102 104" stroke="#d4976a" strokeWidth="1.8" fill="none" strokeLinecap="round" />
-
-        {/* smile */}
-        <path d="M86 114 Q100 126, 114 114" stroke="#c46a3a" strokeWidth="2.2" fill="none" strokeLinecap="round" />
-        {/* teeth hint */}
-        <path d="M92 116 Q100 122, 108 116" fill="#fff" opacity="0.85" />
-
-        {/* cheek blush */}
-        <circle cx="74" cy="112" r="7" fill="#f4a0a0" opacity="0.35" />
-        <circle cx="126" cy="112" r="7" fill="#f4a0a0" opacity="0.35" />
-
-        {/* beard stubble dots */}
-        <g fill="#8b6b4a" opacity="0.18">
-          <circle cx="82" cy="122" r="0.8" />
-          <circle cx="88" cy="126" r="0.8" />
-          <circle cx="94" cy="128" r="0.8" />
-          <circle cx="100" cy="130" r="0.8" />
-          <circle cx="106" cy="128" r="0.8" />
-          <circle cx="112" cy="126" r="0.8" />
-          <circle cx="118" cy="122" r="0.8" />
-        </g>
-
-        {/* waving hand */}
-        <g className="av-hand">
-          <circle cx="152" cy="125" r="10" fill="#f0c08a" />
-          {/* fingers */}
-          <rect x="148" y="112" width="4" height="10" rx="2" fill="#f0c08a" transform="rotate(-8 150 118)" />
-          <rect x="153" y="110" width="4" height="11" rx="2" fill="#f0c08a" transform="rotate(2 155 116)" />
-          <rect x="158" y="112" width="3.5" height="10" rx="2" fill="#f0c08a" transform="rotate(10 159.5 118)" />
-          {/* thumb */}
-          <rect x="143" y="120" width="4" height="8" rx="2" fill="#f0c08a" transform="rotate(-30 145 124)" />
-          {/* wrist / arm connector */}
-          <rect x="140" y="130" width="14" height="10" rx="4" fill="#3b82f6" />
-        </g>
+      <g opacity="0.9">
+        <ellipse cx="50" cy="58" rx="18" ry="8" fill="#ffffff" />
+        <ellipse cx="168" cy="62" rx="22" ry="9" fill="#ffffff" />
       </g>
 
-      {/* sparkles */}
-      <g className="av-sparkle" filter="url(#av-glow)">
-        <path d="M38 38 L40 32 L42 38 L48 40 L42 42 L40 48 L38 42 L32 40 Z" fill="#fbbf24" />
-      </g>
-      <g className="av-sparkle av-sparkle-2" filter="url(#av-glow)">
-        <path d="M160 28 L161.5 23 L163 28 L168 29.5 L163 31 L161.5 36 L160 31 L155 29.5 Z" fill="#fbbf24" />
+      <rect x="0" y="145" width="220" height="75" fill="#6fc04d" />
+      <circle cx="40" cy="160" r="14" fill="#4a9f38" />
+      <circle cx="182" cy="162" r="16" fill="#4a9f38" />
+
+      <g className="av-root">
+        <g className={`av-person ${dragonMode ? 'hidden' : 'visible'}`}>
+          <ellipse cx="110" cy="165" rx="58" ry="32" fill="url(#av-shirt)" />
+          <rect x="88" y="143" width="44" height="24" rx="12" fill="#f2c59a" />
+
+          <ellipse cx="110" cy="102" rx="49" ry="52" fill="#f2c59a" />
+          <path
+            d="M61 96 C63 58, 83 40, 110 40 C139 41, 158 60, 160 95
+               C150 74, 136 66, 110 64 C84 66, 70 74, 61 96 Z"
+            fill="url(#av-hair)"
+          />
+
+          <ellipse cx="69" cy="108" rx="9" ry="13" fill="#edb98b" />
+          <ellipse cx="151" cy="108" rx="9" ry="13" fill="#edb98b" />
+
+          <g className="av-eye">
+            <path d="M86 108 Q95 100, 104 108" stroke="#2b1f16" strokeWidth="5" fill="none" strokeLinecap="round" />
+          </g>
+          <g className="av-eye">
+            <path d="M116 108 Q125 100, 134 108" stroke="#2b1f16" strokeWidth="5" fill="none" strokeLinecap="round" />
+          </g>
+
+          <circle cx="82" cy="122" r="8" fill="#ff9f97" opacity="0.7" />
+          <circle cx="138" cy="122" r="8" fill="#ff9f97" opacity="0.7" />
+
+          <path d="M85 133 Q110 153, 135 133" fill="#6b2f1d" />
+          <path d="M91 135 Q110 149, 129 135" fill="#ffffff" />
+
+          <rect x="99" y="156" width="22" height="22" rx="5" fill="#eb3349" />
+          <text x="110" y="171" textAnchor="middle" fontSize="10" fill="#ffffff" fontWeight="700">AI</text>
+        </g>
+
+        <g className={`av-dragon ${dragonMode ? 'visible' : 'hidden'}`}>
+          <ellipse cx="110" cy="168" rx="48" ry="26" fill="url(#av-dragon)" />
+          <ellipse cx="110" cy="110" rx="43" ry="44" fill="url(#av-dragon)" />
+
+          <path d="M78 85 L92 70 L96 92 Z" fill="#6ee198" />
+          <path d="M142 85 L128 70 L124 92 Z" fill="#6ee198" />
+
+          <ellipse cx="95" cy="108" rx="14" ry="16" fill="#ffffff" />
+          <ellipse cx="125" cy="108" rx="14" ry="16" fill="#ffffff" />
+          <g className="av-eye">
+            <ellipse cx="96" cy="110" rx="7" ry="9" fill="#23543b" />
+            <ellipse cx="124" cy="110" rx="7" ry="9" fill="#23543b" />
+            <circle cx="98" cy="107" r="2" fill="#ffffff" />
+            <circle cx="126" cy="107" r="2" fill="#ffffff" />
+          </g>
+
+          <circle cx="84" cy="122" r="7" fill="#9ef2b6" />
+          <circle cx="136" cy="122" r="7" fill="#9ef2b6" />
+
+          <path d="M93 132 Q110 145, 127 132" stroke="#1f5f3f" strokeWidth="4" fill="none" strokeLinecap="round" />
+          <path d="M100 137 L104 143 L108 137" fill="#ffffff" />
+          <path d="M112 137 L116 143 L120 137" fill="#ffffff" />
+
+          <path className="av-tail" d="M144 160 C168 150, 183 166, 170 184 C162 195, 146 188, 152 176" fill="none" stroke="#49c57b" strokeWidth="14" strokeLinecap="round" />
+
+          <path d="M88 164 C95 154, 103 154, 110 164" stroke="#6ee198" strokeWidth="6" fill="none" strokeLinecap="round" />
+          <path d="M110 164 C117 154, 125 154, 132 164" stroke="#6ee198" strokeWidth="6" fill="none" strokeLinecap="round" />
+        </g>
       </g>
     </svg>
   )
