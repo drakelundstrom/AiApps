@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link, NavLink, Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import { QRCodeSVG } from 'qrcode.react'
-import DrakeAvatar from './DrakeAvatar'
 import FlappyBird from './FlappyBird'
 import JapaneseGarden from './JapaneseGarden'
 import ColorSudoku from './ColorSudoku'
@@ -72,7 +71,6 @@ function HomePage() {
 
   return (
     <section className="home-page">
-      <DrakeAvatar size={220} className="home-dragon-banner" />
       <h1>Vibing with Drake</h1>
       <p className="home-tagline">AI vibe-coded apps — built with GitHub Copilot & good vibes ✨</p>
 
