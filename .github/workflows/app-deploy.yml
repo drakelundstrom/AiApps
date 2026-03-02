@@ -8,6 +8,16 @@ on:
     paths:
       - 'code/ui/**'
       - '.github/workflows/app-deploy.yml'
+  workflow_run:
+    workflows: ["Infra Deploy"]
+    types:
+      - completed
+    branches:
+      - main
+
+concurrency:
+  group: app-deploy-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   AZURE_WEBAPP_NAME: VibingWithDrake
@@ -16,6 +26,7 @@ env:
 jobs:
   build-and-deploy:
     name: build and deploy static web app
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: checkout
