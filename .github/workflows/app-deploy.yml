@@ -46,6 +46,13 @@ jobs:
       - name: install SWA CLI
         run: npm install -g @azure/static-web-apps-cli
 
+      - name: log in to Azure
+        run: |
+          az login --service-principal \
+            -u ${{ secrets.AZURE_CLIENT_ID }} \
+            -p ${{ secrets.AZURE_CLIENT_SECRET }} \
+            --tenant ${{ secrets.AZURE_TENANT_ID }}
+
       - name: deploy to Azure Static Web App
         env:
           SWA_CLI_APP_NAME: ${{ env.AZURE_WEBAPP_NAME }}
