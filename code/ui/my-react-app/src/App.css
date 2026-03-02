@@ -1,27 +1,22 @@
-#root {
-  width: 100%;
-  min-height: 100%;
+#root,
+.app-shell,
+.page-shell {
+  inline-size: 100%;
+  min-block-size: 100%;
 }
 
 .app-shell {
-  width: 100%;
-  min-height: 100%;
   position: relative;
-}
-
-.page-shell {
-  width: 100%;
-  min-height: 100%;
 }
 
 .hamburger-button {
   position: fixed;
-  top: 14px;
-  left: 14px;
-  width: 44px;
-  height: 44px;
+  inset-block-start: 14px;
+  inset-inline-start: 14px;
+  inline-size: 44px;
+  block-size: 44px;
   border: 0;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 0;
   background: rgba(16, 20, 28, 0.88);
   display: flex;
@@ -30,14 +25,15 @@
   align-items: center;
   gap: 5px;
   cursor: pointer;
-  z-index: 1000;
+  z-index: var(--z-hamburger);
+  transition: background var(--transition-fast);
 }
 
 .hamburger-button span {
-  width: 20px;
-  height: 2px;
-  background: #f0f4ff;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  inline-size: 20px;
+  block-size: 2px;
+  background: var(--color-text-muted);
+  transition: transform var(--transition-normal), opacity var(--transition-normal);
 }
 
 .hamburger-button.open span:nth-child(1) {
@@ -58,8 +54,8 @@
   background: rgba(0, 0, 0, 0.35);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s ease;
-  z-index: 980;
+  transition: opacity var(--transition-normal);
+  z-index: var(--z-menu-backdrop);
 }
 
 .menu-backdrop.open {
@@ -69,17 +65,17 @@
 
 .side-menu {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 220px;
-  max-width: 85vw;
-  height: 100vh;
-  padding: 72px 16px 16px;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 220px;
+  max-inline-size: 85vw;
+  block-size: 100dvh;
+  padding: 72px var(--space-md) var(--space-md);
   background: rgba(9, 11, 16, 0.95);
   transform: translateX(-100%);
-  transition: transform 0.2s ease;
-  z-index: 990;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform var(--transition-normal);
+  z-index: var(--z-menu);
+  border-inline-end: 1px solid var(--color-border-strong);
 }
 
 .side-menu.open {
@@ -87,21 +83,22 @@
 }
 
 .menu-title {
-  color: #8ebcff;
+  color: var(--color-accent);
   font-size: 0.85rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  margin-bottom: 12px;
+  margin-block-end: var(--space-sm);
 }
 
 .menu-link {
   display: block;
   padding: 10px 12px;
-  border-radius: 10px;
-  color: #e7ecfa;
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
   text-decoration: none;
-  margin-bottom: 8px;
-  font-weight: 600;
+  margin-block-end: var(--space-sm);
+  font-weight: var(--font-weight-semibold);
+  transition: background var(--transition-fast);
 }
 
 .menu-link:hover,
@@ -110,12 +107,12 @@
 }
 
 .game-wrapper {
-  width: 100%;
-  height: 100vh;
+  inline-size: 100%;
+  block-size: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #1a1a2e;
+  background: var(--color-bg);
   overflow: hidden;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
@@ -125,31 +122,31 @@
 
 .game-canvas {
   display: block;
-  max-width: 100vw;
-  max-height: 100vh;
-  border-radius: 4px;
+  max-inline-size: 100vw;
+  max-block-size: 100dvh;
+  border-radius: var(--space-xs);
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   image-rendering: pixelated;
 }
 
 .home-page {
-  width: 100%;
-  min-height: 100%;
-  padding: 84px 20px 40px;
-  color: #e7ecfa;
+  inline-size: 100%;
+  min-block-size: 100%;
+  padding: 84px 20px var(--space-xl);
+  color: var(--color-text);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-sm);
   align-items: center;
   text-align: center;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, var(--color-bg-alt), #1e293b);
   overflow: auto;
 }
 
 .home-page h1 {
   font-size: clamp(1.8rem, 4vw, 2.8rem);
-  font-weight: 900;
+  font-weight: var(--font-weight-black);
   letter-spacing: -0.5px;
   margin: 0;
 }
@@ -157,19 +154,19 @@
 .home-tagline {
   font-size: clamp(0.9rem, 2vw, 1.1rem);
   opacity: 0.6;
-  margin: 0 0 12px;
+  margin: 0 0 var(--space-sm);
 }
 
 .home-bio,
 .home-apps,
 .home-qr {
-  width: 100%;
-  max-width: 540px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 20px 24px;
-  margin-top: 8px;
+  inline-size: 100%;
+  max-inline-size: 540px;
+  background: var(--color-surface-hover);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 20px var(--space-lg);
+  margin-block-start: var(--space-sm);
   text-align: left;
 }
 
@@ -177,9 +174,9 @@
 .home-apps h2,
 .home-qr h2 {
   font-size: 1.1rem;
-  font-weight: 700;
-  margin: 0 0 8px;
-  color: #8ebcff;
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--space-sm);
+  color: var(--color-accent);
 }
 
 .home-bio p,
@@ -187,20 +184,25 @@
   font-size: 0.92rem;
   line-height: 1.6;
   opacity: 0.85;
-  margin: 0 0 8px;
+  margin: 0 0 var(--space-sm);
 }
 
 .home-links {
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }
 
-.home-links a {
-  color: #8ebcff;
+.home-links a,
+.app-list a {
+  color: var(--color-accent);
   text-decoration: none;
+  font-weight: var(--font-weight-semibold);
+  transition: color var(--transition-fast);
 }
 
-.home-links a:hover {
+.home-links a:hover,
+.app-list a:hover {
   text-decoration: underline;
+  color: var(--color-accent-hover);
 }
 
 .app-list {
@@ -215,16 +217,6 @@
 .app-list li {
   font-size: 0.92rem;
   opacity: 0.85;
-}
-
-.app-list a {
-  color: #8ebcff;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.app-list a:hover {
-  text-decoration: underline;
 }
 
 .home-qr {
@@ -245,14 +237,14 @@
 }
 
 .legacy-page-frame {
-  width: 100%;
-  height: 100%;
-  padding-top: 64px;
+  inline-size: 100%;
+  block-size: 100%;
+  padding-block-start: 64px;
 }
 
 .legacy-iframe {
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   border: 0;
   background: #020308;
 }
@@ -261,4 +253,30 @@
   .menu-backdrop {
     display: none;
   }
+}
+
+/* ───────── shared component patterns ───────── */
+
+.page-container {
+  inline-size: 100%;
+  min-block-size: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 80px var(--space-md) var(--space-xl);
+}
+
+.page-container--center {
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.glass-card {
+  inline-size: 100%;
+  background: var(--color-surface);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--color-border);
 }

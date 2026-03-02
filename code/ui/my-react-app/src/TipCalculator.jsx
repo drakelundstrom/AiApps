@@ -38,8 +38,8 @@ export default function TipCalculator() {
   const ratingLabels = ['', 'Terrible', 'Poor', 'Okay', 'Good', 'Amazing']
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
+    <div className="page-container" style={styles.container}>
+      <div className="glass-card" style={styles.card}>
         <h1 style={styles.title}>💰 Tip Calculator</h1>
 
         {/* Bill input */}
@@ -166,26 +166,11 @@ export default function TipCalculator() {
 
 const styles = {
   container: {
-    width: '100%',
-    minHeight: '100%',
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    background: 'linear-gradient(135deg, #0f172a, #1e293b)',
-    fontFamily: "'Segoe UI', system-ui, sans-serif",
-    color: '#f0f4ff',
-    padding: '80px 16px 40px',
-    boxSizing: 'border-box',
+    background: 'linear-gradient(135deg, var(--color-bg-alt), #1e293b)',
   },
   card: {
-    width: '100%',
     maxWidth: 420,
-    background: 'rgba(30, 30, 50, 0.85)',
-    backdropFilter: 'blur(12px)',
-    borderRadius: 20,
     padding: 28,
-    boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
-    border: '1px solid rgba(255,255,255,0.08)',
   },
   title: {
     margin: '0 0 20px',
@@ -206,8 +191,8 @@ const styles = {
   inputWrap: {
     display: 'flex',
     alignItems: 'center',
-    background: '#1a1a2e',
-    borderRadius: 12,
+    background: 'var(--color-bg)',
+    borderRadius: 'var(--radius-md)',
     padding: '0 14px',
     border: '1px solid #333',
   },
@@ -276,9 +261,9 @@ const styles = {
   },
   customInput: {
     width: 70,
-    background: '#1a1a2e',
+    background: 'var(--color-bg)',
     border: '1px solid #333',
-    borderRadius: 8,
+    borderRadius: 'var(--radius-sm)',
     color: '#fff',
     fontSize: 16,
     fontWeight: 600,
@@ -310,7 +295,7 @@ const styles = {
   },
   results: {
     marginTop: 24,
-    borderTop: '1px solid rgba(255,255,255,0.1)',
+    borderTop: '1px solid var(--color-border-strong)',
     paddingTop: 18,
     display: 'flex',
     flexDirection: 'column',
@@ -331,7 +316,7 @@ const styles = {
   },
   perPerson: {
     paddingTop: 12,
-    borderTop: '1px dashed rgba(255,255,255,0.1)',
+    borderTop: '1px dashed var(--color-border-strong)',
   },
   summary: {
     marginTop: 16,

@@ -152,8 +152,8 @@ export default function ImagePixelator() {
   }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
+    <div className="page-container" style={styles.container}>
+      <div className="glass-card" style={styles.card}>
         <h1 style={styles.title}>📷 Image Pixelator</h1>
         <p style={styles.subtitle}>Upload or capture a photo, then pixelate & compress it</p>
 
@@ -281,26 +281,11 @@ export default function ImagePixelator() {
 
 const styles = {
   container: {
-    width: '100%',
-    minHeight: '100%',
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    background: 'linear-gradient(135deg, #1a1a2e, #16213e)',
-    fontFamily: "'Segoe UI', system-ui, sans-serif",
-    color: '#f0f4ff',
-    padding: '80px 16px 40px',
-    boxSizing: 'border-box',
+    background: 'linear-gradient(135deg, var(--color-bg), #16213e)',
   },
   card: {
-    width: '100%',
     maxWidth: 520,
-    background: 'rgba(30, 30, 50, 0.85)',
-    backdropFilter: 'blur(12px)',
-    borderRadius: 20,
     padding: 24,
-    boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
-    border: '1px solid rgba(255,255,255,0.08)',
   },
   title: {
     margin: '0 0 4px',
@@ -369,9 +354,9 @@ const styles = {
     cursor: 'pointer',
   },
   canvasWrap: {
-    borderRadius: 12,
+    borderRadius: 'var(--radius-md)',
     overflow: 'hidden',
-    border: '1px solid rgba(255,255,255,0.1)',
+    border: '1px solid var(--color-border-strong)',
     marginBottom: 16,
     lineHeight: 0,
   },
@@ -392,7 +377,6 @@ const styles = {
   },
   slider: {
     width: '100%',
-    accentColor: '#3b82f6',
     cursor: 'pointer',
   },
   sliderTicks: {

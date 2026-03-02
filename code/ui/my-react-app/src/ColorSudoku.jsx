@@ -179,7 +179,7 @@ export default function ColorSudoku() {
   }, [selected, given, won])
 
   return (
-    <div style={styles.container}>
+    <div className="page-container page-container--center" style={styles.container}>
       <h1 style={styles.title}>Color Sudoku</h1>
       <p style={styles.subtitle}>Fill the grid so each row, column, and 3×3 box has all 9 colors</p>
 
@@ -282,17 +282,7 @@ export default function ColorSudoku() {
 
 const styles = {
   container: {
-    width: '100%',
-    minHeight: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
     background: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)',
-    fontFamily: "'Segoe UI', system-ui, sans-serif",
-    color: '#fff',
-    padding: '80px 16px 40px',
-    boxSizing: 'border-box',
   },
   title: {
     margin: 0,
