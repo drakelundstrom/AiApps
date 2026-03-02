@@ -1,0 +1,48 @@
+name: App Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'code/ui/**'
+      - '.github/workflows/app-deploy.yml'
+
+env:
+  AZURE_WEBAPP_NAME: VibingWithDrake
+  NODE_VERSION: "24.x"
+
+jobs:
+  build-and-deploy:
+    name: build and deploy static web app
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v6
+
+      - name: use node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: npm install and build
+        run: |
+          cd code/ui/my-react-app
+          npm install
+          npm run build
+
+      - name: log in to Azure
+        run: |
+          az login --service-principal \
+            -u ${{ secrets.AZURE_CLIENT_ID }} \
+            -p ${{ secrets.AZURE_CLIENT_SECRET }} \
+            --tenant ${{ secrets.AZURE_TENANT_ID }}
+
+      - name: deploy to Azure Static Web App
+        run: |
+          az staticwebapp deploy \
+            --name ${{ env.AZURE_WEBAPP_NAME }} \
+            --resource-group 'FunAiApps' \
+            --app-location code/ui/my-react-app/dist \
+            --no-build
