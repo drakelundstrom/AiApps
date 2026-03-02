@@ -28,6 +28,9 @@ jobs:
     name: build and deploy static web app
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: code/ui/my-react-app
     steps:
       - name: checkout
         uses: actions/checkout@v6
@@ -39,10 +42,12 @@ jobs:
           cache: 'npm'
           cache-dependency-path: code/ui/my-react-app/package-lock.json
 
-      - name: install and build
+      - name: install dependencies
         run: |
-          cd code/ui/my-react-app
-          npm ci
+          npm ci --prefer-offline --no-audit --fund=false
+
+      - name: build app
+        run: |
           npm run build
 
       - name: log in to Azure
@@ -59,4 +64,4 @@ jobs:
           SWA_CLI_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           SWA_CLI_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           SWA_CLI_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-        run: npx @azure/static-web-apps-cli deploy code/ui/my-react-app/dist --env production
+        run: npx --no-install swa deploy dist --env production
