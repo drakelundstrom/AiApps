@@ -282,16 +282,15 @@ export default function ImagePixelator() {
 const styles = {
   container: {
     width: '100%',
-    height: '100%',
+    minHeight: '100%',
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
     background: 'linear-gradient(135deg, #1a1a2e, #16213e)',
     fontFamily: "'Segoe UI', system-ui, sans-serif",
     color: '#f0f4ff',
-    padding: 16,
+    padding: '80px 16px 40px',
     boxSizing: 'border-box',
-    overflow: 'auto',
   },
   card: {
     width: '100%',

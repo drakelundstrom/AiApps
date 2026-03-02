@@ -333,7 +333,7 @@ export default function JapaneseGarden() {
   const [showPetals, setShowPetals] = useState(true)
 
   return (
-    <div style={{ width: '100%', height: '100%', position: 'relative', background: '#1a1a2e' }}>
+    <div style={{ width: '100%', height: '100vh', position: 'relative', background: '#1a1a2e' }}>
       <Canvas
         camera={{ position: [8, 5, 10], fov: 55 }}
         style={{ width: '100%', height: '100%' }}

@@ -283,17 +283,16 @@ export default function ColorSudoku() {
 const styles = {
   container: {
     width: '100%',
-    height: '100%',
+    minHeight: '100%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     background: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)',
     fontFamily: "'Segoe UI', system-ui, sans-serif",
     color: '#fff',
-    padding: 16,
+    padding: '80px 16px 40px',
     boxSizing: 'border-box',
-    overflow: 'auto',
   },
   title: {
     margin: 0,
