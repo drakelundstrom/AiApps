@@ -43,17 +43,14 @@ jobs:
           npm install
           npm run build
 
-      - name: log in to Azure
-        run: |
-          az login --service-principal \
-            -u ${{ secrets.AZURE_CLIENT_ID }} \
-            -p ${{ secrets.AZURE_CLIENT_SECRET }} \
-            --tenant ${{ secrets.AZURE_TENANT_ID }}
+      - name: install SWA CLI
+        run: npm install -g @azure/static-web-apps-cli
 
       - name: deploy to Azure Static Web App
-        run: |
-          az staticwebapp deploy \
-            --name ${{ env.AZURE_WEBAPP_NAME }} \
-            --resource-group 'FunAiApps' \
-            --app-location code/ui/my-react-app/dist \
-            --no-build
+        env:
+          SWA_CLI_APP_NAME: ${{ env.AZURE_WEBAPP_NAME }}
+          SWA_CLI_RESOURCE_GROUP: FunAiApps
+          SWA_CLI_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          SWA_CLI_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          SWA_CLI_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        run: swa deploy code/ui/my-react-app/dist --env production --no-build
