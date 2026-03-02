@@ -7,6 +7,7 @@ import ColorSudoku from './ColorSudoku'
 import TipCalculator from './TipCalculator'
 import ImagePixelator from './ImagePixelator'
 import LeagueOfLegends from './LeagueOfLegends'
+import FortniteSkins from './FortniteSkins'
 import './App.css'
 
 const NAV_ITEMS = [
@@ -17,6 +18,7 @@ const NAV_ITEMS = [
   { to: '/tip-calculator', label: 'Tip Calculator' },
   { to: '/image-pixelator', label: 'Image Pixelator' },
   { to: '/league-of-legends', label: 'League of Legends' },
+  { to: '/fortnite-skins', label: 'Fortnite Skins' },
   { to: '/legacy/fishy', label: 'Fishy (HTML/JS)' },
 ]
 
@@ -104,6 +106,7 @@ function HomePage() {
           <li><Link to="/tip-calculator">💰 Tip Calculator</Link> — Split bills with friends</li>
           <li><Link to="/image-pixelator">📷 Image Pixelator</Link> — Pixelate & compress photos</li>
           <li><Link to="/league-of-legends">⚔️ League of Legends</Link> — Scoreboard & Meta Tier List</li>
+          <li><Link to="/fortnite-skins">🎮 Fortnite Skins</Link> — Share & flex your locker</li>
           <li><Link to="/legacy/fishy">🐟 Fishy</Link> — Classic HTML/JS game</li>
         </ul>
       </div>
@@ -144,6 +147,7 @@ function App() {
         <Route path="/tip-calculator" element={<TipCalculator />} />
         <Route path="/image-pixelator" element={<ImagePixelator />} />
         <Route path="/league-of-legends" element={<LeagueOfLegends />} />
+        <Route path="/fortnite-skins" element={<FortniteSkins />} />
         <Route
           path="/legacy/fishy"
           element={<LegacyHtmlPage src="/legacy-pages/fishy/index.html" title="Fishy Game" />}
