@@ -8,6 +8,7 @@ import TipCalculator from './TipCalculator'
 import ImagePixelator from './ImagePixelator'
 import LeagueOfLegends from './LeagueOfLegends'
 import FortniteSkins from './FortniteSkins'
+import DCDeckBuilder from './DCDeckBuilder'
 import VideoToGif from './VideoToGif'
 import './App.css'
 
@@ -20,6 +21,7 @@ const NAV_ITEMS = [
   { to: '/image-pixelator', label: 'Image Pixelator' },
   { to: '/league-of-legends', label: 'League of Legends' },
   { to: '/fortnite-skins', label: 'Fortnite Skins' },
+  { to: '/dc-deck-builder', label: 'DC Deck Builder' },
   { to: '/video-to-gif', label: 'Video → GIF' },
   { to: '/legacy/fishy', label: 'Fishy (HTML/JS)' },
 ]
@@ -109,6 +111,7 @@ function HomePage() {
           <li><Link to="/image-pixelator">📷 Image Pixelator</Link> — Pixelate & compress photos</li>
           <li><Link to="/league-of-legends">⚔️ League of Legends</Link> — Scoreboard & Meta Tier List</li>
           <li><Link to="/fortnite-skins">🎮 Fortnite Skins</Link> — Share & flex your locker</li>
+          <li><Link to="/dc-deck-builder">🃏 DC Deck Builder</Link> — Victory Point tracker for DC DBG</li>
           <li><Link to="/video-to-gif">🎬 Video → GIF</Link> — Convert video to GIF in-browser with WASM</li>
           <li><Link to="/legacy/fishy">🐟 Fishy</Link> — Classic HTML/JS game</li>
         </ul>
@@ -151,6 +154,7 @@ function App() {
         <Route path="/image-pixelator" element={<ImagePixelator />} />
         <Route path="/league-of-legends" element={<LeagueOfLegends />} />
         <Route path="/fortnite-skins" element={<FortniteSkins />} />
+        <Route path="/dc-deck-builder" element={<DCDeckBuilder />} />
         <Route path="/video-to-gif" element={<VideoToGif />} />
         <Route
           path="/legacy/fishy"
