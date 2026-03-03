@@ -1,9 +1,75 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+﻿import { useCallback, useEffect, useRef, useState } from 'react'
 import type { MouseEvent, TouchEvent } from 'react'
 import type { Balloon, BalloonCanvasSize, BalloonParticle } from './interfaces'
 import { styles } from './constants/styles'
 import { createAudioContext, playPop, startMusic } from './audio/audioEngine'
 import { makeBalloon } from './utils/makeBalloon'
+
+function drawBalloonBody(ctx: CanvasRenderingContext2D, balloon: Balloon, cx: number, cy: number, scale = 1): void {
+  const width = balloon.size * 0.38 * scale
+  const height = balloon.size * 0.5 * scale
+
+  ctx.fillStyle = balloon.color
+  ctx.strokeStyle = 'rgba(255,255,255,0.35)'
+  ctx.lineWidth = Math.max(1.5, balloon.size * 0.03)
+  ctx.beginPath()
+
+  switch (balloon.shape) {
+    case 'oval':
+      ctx.ellipse(cx, cy, width * 0.85, height * 1.1, 0, 0, Math.PI * 2)
+      break
+    case 'diamond':
+      ctx.moveTo(cx, cy - height)
+      ctx.lineTo(cx + width, cy)
+      ctx.lineTo(cx, cy + height)
+      ctx.lineTo(cx - width, cy)
+      ctx.closePath()
+      break
+    case 'heart': {
+      const topY = cy - height * 0.2
+      ctx.moveTo(cx, cy + height)
+      ctx.bezierCurveTo(cx - width * 1.2, cy + height * 0.35, cx - width * 1.2, topY, cx, topY)
+      ctx.bezierCurveTo(cx + width * 1.2, topY, cx + width * 1.2, cy + height * 0.35, cx, cy + height)
+      break
+    }
+    case 'star': {
+      const spikes = 5
+      const outer = Math.max(width, height)
+      const inner = outer * 0.45
+      const step = Math.PI / spikes
+      ctx.moveTo(cx, cy - outer)
+      for (let i = 1; i < spikes * 2; i += 1) {
+        const radius = i % 2 === 0 ? outer : inner
+        const angle = -Math.PI / 2 + i * step
+        ctx.lineTo(cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius)
+      }
+      ctx.closePath()
+      break
+    }
+    case 'round':
+    default:
+      ctx.ellipse(cx, cy, width, height, 0, 0, Math.PI * 2)
+      break
+  }
+
+  ctx.fill()
+  ctx.stroke()
+
+  ctx.save()
+  ctx.globalAlpha = 0.35
+  ctx.fillStyle = '#ffffff'
+  ctx.beginPath()
+  ctx.ellipse(cx - width * 0.35, cy - height * 0.35, width * 0.22, height * 0.18, 0, 0, Math.PI * 2)
+  ctx.fill()
+  ctx.restore()
+
+  ctx.strokeStyle = `${balloon.color}88`
+  ctx.lineWidth = 1.5
+  ctx.beginPath()
+  ctx.moveTo(cx, cy + height * 0.8)
+  ctx.quadraticCurveTo(cx + width * 0.2, cy + height * 1.25, cx, cy + height * 1.55)
+  ctx.stroke()
+}
 
 export default function BalloonPopPage() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -144,14 +210,14 @@ export default function BalloonPopPage() {
 
       const activeBalloons: Balloon[] = []
       for (const balloon of balloonsRef.current) {
+        const cx = balloon.x + balloon.size / 2
+        const cy = balloon.y + balloon.size / 2
+
         if (balloon.popping) {
           if (now - balloon.popTime > 300) continue
           const t = (now - balloon.popTime) / 300
           ctx.globalAlpha = 1 - t
-          ctx.font = `${balloon.size * (1 + t * 0.5)}px serif`
-          ctx.textAlign = 'center'
-          ctx.textBaseline = 'middle'
-          ctx.fillText(balloon.emoji, balloon.x + balloon.size / 2, balloon.y + balloon.size / 2)
+          drawBalloonBody(ctx, balloon, cx, cy, 1 + t * 0.45)
           ctx.globalAlpha = 1
           activeBalloons.push(balloon)
           continue
@@ -173,8 +239,6 @@ export default function BalloonPopPage() {
           balloon.speed = 0.6 + Math.random() * 1.4
         }
 
-        const cx = balloon.x + balloon.size / 2
-        const cy = balloon.y + balloon.size / 2
         const glow = ctx.createRadialGradient(cx, cy, balloon.size * 0.1, cx, cy, balloon.size * 0.8)
         glow.addColorStop(0, `${balloon.color}CC`)
         glow.addColorStop(1, `${balloon.color}00`)
@@ -183,23 +247,8 @@ export default function BalloonPopPage() {
         ctx.arc(cx, cy, balloon.size * 0.8, 0, Math.PI * 2)
         ctx.fill()
 
-        ctx.font = `${balloon.size}px serif`
-        ctx.textAlign = 'center'
-        ctx.textBaseline = 'middle'
-        const bounce = Math.sin(now * 0.003 + balloon.wobbleOffset) * 3
-        ctx.fillText(balloon.emoji, cx, cy + bounce)
-
-        ctx.strokeStyle = `${balloon.color}88`
-        ctx.lineWidth = 1.5
-        ctx.beginPath()
-        ctx.moveTo(cx, cy + balloon.size * 0.45)
-        ctx.quadraticCurveTo(
-          cx + Math.sin(now * 0.002 + balloon.wobbleOffset) * 5,
-          cy + balloon.size * 0.7,
-          cx,
-          cy + balloon.size * 0.9,
-        )
-        ctx.stroke()
+        const bounce = Math.sin(now * 0.003 + balloon.wobbleOffset) * 1.8
+        drawBalloonBody(ctx, balloon, cx, cy + bounce)
 
         activeBalloons.push(balloon)
       }
@@ -282,3 +331,4 @@ export default function BalloonPopPage() {
     </div>
   )
 }
+

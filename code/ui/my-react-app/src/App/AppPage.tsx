@@ -105,7 +105,7 @@ function HomePage() {
         <h2>Apps</h2>
         <p>Open the menu (☰) to explore:</p>
         <ul className="app-list">
-          <li><Link to="/flappy-bird">🐦 Flappy Bird</Link></li>
+          <li><Link to="/flappy-bird">🐦 Flappy Bird</Link> — Tap to flap through pipes and beat your high score</li>
           <li><Link to="/japanese-garden">🌸 Japanese Garden</Link> — 3D scene with toggleable sakura petals</li>
           <li><Link to="/color-sudoku">🎨 Color Sudoku</Link> — Sudoku with colors instead of numbers</li>
           <li><Link to="/tip-calculator">💰 Tip Calculator</Link> — Split bills with friends</li>
@@ -157,3 +157,4 @@ function App() {
 }
 
 export default App
+

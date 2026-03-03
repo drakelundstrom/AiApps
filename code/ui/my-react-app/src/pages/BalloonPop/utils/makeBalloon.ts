@@ -1,4 +1,4 @@
-import { BALLOON_COLORS, BALLOON_EMOJIS } from '../constants/balloonConstants'
+﻿import { BALLOON_COLORS, BALLOON_SHAPES } from '../constants/balloonConstants'
 import type { Balloon } from '../interfaces'
 
 let nextId = 0
@@ -15,7 +15,7 @@ export function makeBalloon(areaW: number, areaH: number): Balloon {
     wobbleSpeed: 0.5 + Math.random() * 1.5,
     wobbleOffset: Math.random() * Math.PI * 2,
     color: BALLOON_COLORS[Math.floor(Math.random() * BALLOON_COLORS.length)],
-    emoji: BALLOON_EMOJIS[Math.floor(Math.random() * BALLOON_EMOJIS.length)],
+    shape: BALLOON_SHAPES[Math.floor(Math.random() * BALLOON_SHAPES.length)],
     popping: false,
     popTime: 0,
   }

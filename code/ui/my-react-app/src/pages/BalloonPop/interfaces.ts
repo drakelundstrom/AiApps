@@ -1,4 +1,6 @@
-import type { CSSProperties } from 'react'
+﻿import type { CSSProperties } from 'react'
+
+export type BalloonShape = 'round' | 'oval' | 'diamond' | 'heart' | 'star'
 
 export interface Balloon {
   id: number
@@ -10,7 +12,7 @@ export interface Balloon {
   wobbleSpeed: number
   wobbleOffset: number
   color: string
-  emoji: string
+  shape: BalloonShape
   popping: boolean
   popTime: number
 }
@@ -34,3 +36,4 @@ export interface BalloonCanvasSize {
 export interface BalloonPopStyles {
   [key: string]: CSSProperties
 }
+
