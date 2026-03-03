@@ -72,7 +72,7 @@ export function drawSeaweed(renderContext: FishyRenderContext, timestamp: number
       : seaweed.color
     ctx.globalAlpha = 0.6 * (1 - dread * 0.8)
 
-    const baseY = dimensions.H() - 35
+    const baseY = dimensions.H() - 1
     let prevX = seaweed.x
     let prevY = baseY
     const heightMult = 1 - dread * 0.7

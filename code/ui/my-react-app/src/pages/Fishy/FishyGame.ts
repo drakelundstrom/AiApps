@@ -181,7 +181,7 @@ export function startFishyGame({
       state.player.x = clamp(state.player.x, state.player.size, W() - state.player.size)
       state.player.y = clamp(state.player.y, state.player.size, H() - state.player.size)
 
-      if (Math.random() < 0.15 * (1 - dread * 0.6)) {
+      if (Math.random() < 0.075 * (1 - dread * 0.6)) {
         spawnBubble(state, state.player.x - state.player.size * 0.8, state.player.y)
       }
 
