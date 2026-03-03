@@ -1,4 +1,4 @@
-import type { SudokuCell, SudokuTheme, ThemeKey } from '../interfaces'
+﻿import type { SudokuCell, SudokuTheme, ThemeKey } from '../interfaces'
 
 export const SIZE = 9
 export const BOX = 3
@@ -22,8 +22,8 @@ function buildColorTheme(
   }
 }
 
-const classicColors = ['#DC2626', '#EA580C', '#D97706', '#16A34A', '#0891B2', '#2563EB', '#7C3AED', '#DB2777', '#0D9488']
-const classicNames = ['Red', 'Orange', 'Amber', 'Green', 'Cyan', 'Blue', 'Violet', 'Pink', 'Teal']
+const classicColors = ['#DB2777', '#DC2626', '#EA580C', '#D97706', '#16A34A', '#0891B2', '#2563EB', '#BF55EC', '#7C3AED']
+const classicNames = ['Pink', 'Red', 'Orange', 'Amber', 'Green', 'Cyan', 'Blue', 'Light Purple', 'Violet']
 const emojiSymbols = ['⭐', '❤️', '🔥', '🍀', '💧', '🌙', '⚡', '🌸', '💎']
 const shapeSymbols = ['●', '■', '▲', '◆', '★', '✚', '♥', '➤', '⬡']
 
@@ -80,7 +80,7 @@ export const THEMES: Record<ThemeKey, SudokuTheme> = {
   rainbow: {
     label: '🌈 Rainbow',
     desc: 'Animated shifting hues',
-    colors: ['#EF4444', '#F97316', '#EAB308', '#22C55E', '#06B6D4', '#3B82F6', '#8B5CF6', '#EC4899', '#F43F5E'],
+    colors: ['#DB2777', '#DC2626', '#EA580C', '#D97706', '#16A34A', '#0891B2', '#2563EB', '#BF55EC', '#7C3AED'],
     names: classicNames,
     cell: () => null,
     content: () => null,
@@ -89,3 +89,4 @@ export const THEMES: Record<ThemeKey, SudokuTheme> = {
 }
 
 export const THEME_KEYS = Object.keys(THEMES) as ThemeKey[]
+
