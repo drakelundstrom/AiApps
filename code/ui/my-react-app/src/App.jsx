@@ -11,6 +11,7 @@ import FortniteSkins from './FortniteSkins'
 import DCDeckBuilder from './DCDeckBuilder'
 import DeckBuilderTierList from './DeckBuilderTierList'
 import VideoToGif from './VideoToGif'
+import BalloonPop from './BalloonPop'
 import './App.css'
 
 const NAV_ITEMS = [
@@ -25,6 +26,7 @@ const NAV_ITEMS = [
   { to: '/dc-deck-builder', label: 'DC Deck Builder' },
   { to: '/deck-builder-tier-list', label: 'Deck Builder Tier List' },
   { to: '/video-to-gif', label: 'Video → GIF' },
+  { to: '/balloon-pop', label: 'Balloon Pop' },
   { to: '/legacy/fishy', label: 'Fishy (HTML/JS)' },
 ]
 
@@ -116,6 +118,7 @@ function HomePage() {
           <li><Link to="/dc-deck-builder">🃏 DC Deck Builder</Link> — Victory Point tracker for DC DBG</li>
           <li><Link to="/deck-builder-tier-list">🏆 Deck Builder Tier List</Link> — Rank the best deck-building games</li>
           <li><Link to="/video-to-gif">🎬 Video → GIF</Link> — Convert video to GIF in-browser with WASM</li>
+          <li><Link to="/balloon-pop">🎈 Balloon Pop</Link> — Distract cats, dogs & babies with popping balloons</li>
           <li><Link to="/legacy/fishy">🐟 Fishy</Link> — Classic HTML/JS game</li>
         </ul>
       </div>
@@ -160,6 +163,7 @@ function App() {
         <Route path="/dc-deck-builder" element={<DCDeckBuilder />} />
         <Route path="/deck-builder-tier-list" element={<DeckBuilderTierList />} />
         <Route path="/video-to-gif" element={<VideoToGif />} />
+        <Route path="/balloon-pop" element={<BalloonPop />} />
         <Route
           path="/legacy/fishy"
           element={<LegacyHtmlPage src="/legacy-pages/fishy/index.html" title="Fishy Game" />}
