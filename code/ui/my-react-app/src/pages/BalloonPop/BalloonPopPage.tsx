@@ -274,9 +274,9 @@ export default function BalloonPopPage() {
 
       ctx.fillStyle = 'rgba(255,255,255,0.9)'
       ctx.font = 'bold 28px system-ui, sans-serif'
-      ctx.textAlign = 'left'
+      ctx.textAlign = 'right'
       ctx.textBaseline = 'top'
-      ctx.fillText(`🎈 ${scoreRef.current}`, 16, 16)
+      ctx.fillText(`🎈 ${scoreRef.current}`, w - 16, 16)
 
       animFrameRef.current = requestAnimationFrame(loop)
     }
