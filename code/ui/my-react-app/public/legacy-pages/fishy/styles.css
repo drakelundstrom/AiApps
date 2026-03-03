@@ -45,6 +45,20 @@ body {
   z-index: 10;
   text-shadow: 0 1px 4px rgba(0,0,0,0.5);
   min-width: 120px;
+  transition: background 2s ease, border-color 2s ease, color 2s ease;
+}
+
+.hud.dread {
+  color: #cc9999;
+  background: rgba(30, 5, 5, 0.75);
+  border-color: rgba(139, 0, 0, 0.3);
+}
+
+.hud.abyss {
+  color: #884444;
+  background: rgba(10, 0, 0, 0.85);
+  border-color: rgba(80, 0, 0, 0.5);
+  font-style: italic;
 }
 
 .hud span {
@@ -69,4 +83,18 @@ body {
   -webkit-backdrop-filter: blur(6px);
   z-index: 10;
   text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+  transition: background 2s ease, border-color 2s ease, color 2s ease;
+}
+
+#level-bar.dread {
+  color: #aa6644;
+  background: rgba(30, 5, 5, 0.75);
+  border-color: rgba(139, 0, 0, 0.25);
+}
+
+#level-bar.abyss {
+  color: #8b0000;
+  background: rgba(10, 0, 0, 0.85);
+  border-color: rgba(80, 0, 0, 0.5);
+  font-style: italic;
 }
