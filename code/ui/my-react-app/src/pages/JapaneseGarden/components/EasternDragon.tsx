@@ -1,16 +1,74 @@
-import { useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import {
-  DRAGON_ACTIVE_FLIGHT_SECONDS,
+  DRAGON_CIRCLE_COUNT,
+  DRAGON_CIRCLE_PHASE_SECONDS,
+  DRAGON_ENTER_DURATION_SECONDS,
+  DRAGON_EXIT_DURATION_SECONDS,
   DRAGON_LIFETIME_SECONDS,
 } from '../constants/dragonConfig'
-import type { EasternDragonProps } from '../interfaces'
+import type { DragonInstance, EasternDragonProps } from '../interfaces'
+
+function getDragonPositionAtAge(age: number, dragon: DragonInstance): THREE.Vector3 {
+  const time = Math.max(0, Math.min(age, DRAGON_LIFETIME_SECONDS))
+  const circleStartX = dragon.pathCenterX + dragon.circleRadius
+  const circleStartZ = dragon.pathCenterZ
+  let x = circleStartX
+  let z = circleStartZ
+
+  if (time < DRAGON_ENTER_DURATION_SECONDS) {
+    const enterT = time / DRAGON_ENTER_DURATION_SECONDS
+    x = THREE.MathUtils.lerp(dragon.entryX, circleStartX, enterT)
+    z = THREE.MathUtils.lerp(dragon.entryZ, circleStartZ, enterT)
+  } else if (time < DRAGON_ENTER_DURATION_SECONDS + DRAGON_CIRCLE_PHASE_SECONDS) {
+    const circleTime = time - DRAGON_ENTER_DURATION_SECONDS
+    const loopProgress = circleTime / DRAGON_CIRCLE_PHASE_SECONDS
+    const angle = loopProgress * Math.PI * 2 * DRAGON_CIRCLE_COUNT * dragon.circleDirection
+    x = dragon.pathCenterX + Math.cos(angle) * dragon.circleRadius
+    z = dragon.pathCenterZ + Math.sin(angle) * dragon.circleRadius * 0.75
+  } else {
+    const exitStartTime = DRAGON_ENTER_DURATION_SECONDS + DRAGON_CIRCLE_PHASE_SECONDS
+    const exitT = Math.min(1, (time - exitStartTime) / DRAGON_EXIT_DURATION_SECONDS)
+    x = THREE.MathUtils.lerp(circleStartX, dragon.exitX, exitT)
+    z = THREE.MathUtils.lerp(circleStartZ, dragon.exitZ, exitT)
+  }
+
+  let y = dragon.altitude + Math.sin(time * 1.8 + dragon.wavePhase) * 0.9
+  if (time > DRAGON_ENTER_DURATION_SECONDS + DRAGON_CIRCLE_PHASE_SECONDS) {
+    const exitStartTime = DRAGON_ENTER_DURATION_SECONDS + DRAGON_CIRCLE_PHASE_SECONDS
+    const exitT = Math.min(1, (time - exitStartTime) / DRAGON_EXIT_DURATION_SECONDS)
+    y += exitT * 3.2
+  }
+
+  return new THREE.Vector3(x, y, z)
+}
 
 export function EasternDragon({ dragon }: EasternDragonProps) {
   const groupRef = useRef<THREE.Group | null>(null)
   const bodyRefs = useRef<Array<THREE.Mesh | null>>([])
   const segmentIndices = useMemo(() => Array.from({ length: 15 }, (_, i) => i), [])
+  const mustacheGeometries = useMemo(() => {
+    const makeCurve = (yOffset: number, zSign: 1 | -1) => new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0.45, yOffset, 0.08 * zSign),
+      new THREE.Vector3(0.75, yOffset + 0.05, 0.2 * zSign),
+      new THREE.Vector3(1.05, yOffset + 0.11, 0.32 * zSign),
+      new THREE.Vector3(1.25, yOffset + 0.18, 0.46 * zSign),
+    ])
+
+    return [
+      new THREE.TubeGeometry(makeCurve(0.02, 1), 20, 0.014, 8, false),
+      new THREE.TubeGeometry(makeCurve(-0.07, 1), 20, 0.013, 8, false),
+      new THREE.TubeGeometry(makeCurve(0.02, -1), 20, 0.014, 8, false),
+      new THREE.TubeGeometry(makeCurve(-0.07, -1), 20, 0.013, 8, false),
+    ]
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      mustacheGeometries.forEach((geometry) => geometry.dispose())
+    }
+  }, [mustacheGeometries])
 
   useFrame(({ clock }) => {
     const group = groupRef.current
@@ -19,29 +77,22 @@ export function EasternDragon({ dragon }: EasternDragonProps) {
     const age = clock.elapsedTime - dragon.spawnTime
     if (age < 0) return
 
-    const orbitAngle = dragon.angleOffset + age * dragon.orbitSpeed * dragon.direction
-    const radius = dragon.orbitRadius + Math.sin(age * 0.65 + dragon.wavePhase) * 1.3
-    let x = Math.cos(orbitAngle) * radius
-    let z = Math.sin(orbitAngle) * radius * 0.8
-    let y = dragon.altitude + Math.sin(age * 1.8 + dragon.wavePhase) * 0.9
+    const currentPos = getDragonPositionAtAge(age, dragon)
+    const nextPos = getDragonPositionAtAge(age + 0.08, dragon)
+    const dx = nextPos.x - currentPos.x
+    const dz = nextPos.z - currentPos.z
 
-    let scale = dragon.scale
-    if (age > DRAGON_ACTIVE_FLIGHT_SECONDS) {
-      const awayT = Math.min(
-        1,
-        (age - DRAGON_ACTIVE_FLIGHT_SECONDS)
-        / (DRAGON_LIFETIME_SECONDS - DRAGON_ACTIVE_FLIGHT_SECONDS),
-      )
-      x += Math.cos(dragon.flyAwayHeading) * awayT * 20
-      z += Math.sin(dragon.flyAwayHeading) * awayT * 20
-      y += awayT * 10
-      scale = dragon.scale * (1 - awayT * 0.25)
+    group.position.copy(currentPos)
+    if (Math.abs(dx) + Math.abs(dz) > 0.0001) {
+      group.rotation.y = Math.atan2(-dz, dx)
     }
-
-    group.position.set(x, y, z)
-    group.rotation.y = -orbitAngle + Math.PI / 2
     group.rotation.z = Math.sin(age * 2.2 + dragon.wavePhase) * 0.12
-    group.scale.setScalar(scale)
+
+    const exitStartTime = DRAGON_ENTER_DURATION_SECONDS + DRAGON_CIRCLE_PHASE_SECONDS
+    const exitT = age > exitStartTime
+      ? Math.min(1, (age - exitStartTime) / DRAGON_EXIT_DURATION_SECONDS)
+      : 0
+    group.scale.setScalar(dragon.scale * (1 - exitT * 0.2))
 
     bodyRefs.current.forEach((mesh, i) => {
       if (!mesh) return
@@ -103,23 +154,42 @@ export function EasternDragon({ dragon }: EasternDragonProps) {
           <meshStandardMaterial color="#f8fafc" roughness={0.4} />
         </mesh>
 
-        <mesh position={[0.22, 0.06, 0.13]}>
-          <sphereGeometry args={[0.04, 10, 10]} />
-          <meshStandardMaterial color="#111827" emissive="#f8fafc" emissiveIntensity={0.15} />
+        <mesh position={[0.22, 0.08, 0.15]}>
+          <sphereGeometry args={[0.085, 14, 14]} />
+          <meshStandardMaterial color="#f8fafc" emissive="#f8fafc" emissiveIntensity={0.25} />
         </mesh>
-        <mesh position={[0.22, 0.06, -0.13]}>
-          <sphereGeometry args={[0.04, 10, 10]} />
-          <meshStandardMaterial color="#111827" emissive="#f8fafc" emissiveIntensity={0.15} />
+        <mesh position={[0.22, 0.08, -0.15]}>
+          <sphereGeometry args={[0.085, 14, 14]} />
+          <meshStandardMaterial color="#f8fafc" emissive="#f8fafc" emissiveIntensity={0.25} />
         </mesh>
 
-        <mesh position={[0.48, -0.04, 0.1]} rotation={[0.02, 0, -0.9]}>
-          <cylinderGeometry args={[0.012, 0.014, 0.48, 6]} />
-          <meshStandardMaterial color="#f8fafc" roughness={0.45} />
+        <mesh position={[0.29, 0.08, 0.15]}>
+          <sphereGeometry args={[0.045, 12, 12]} />
+          <meshStandardMaterial color={dragon.accentColor} emissive={dragon.accentColor} emissiveIntensity={0.35} />
         </mesh>
-        <mesh position={[0.48, -0.04, -0.1]} rotation={[-0.02, 0, -0.9]}>
-          <cylinderGeometry args={[0.012, 0.014, 0.48, 6]} />
-          <meshStandardMaterial color="#f8fafc" roughness={0.45} />
+        <mesh position={[0.29, 0.08, -0.15]}>
+          <sphereGeometry args={[0.045, 12, 12]} />
+          <meshStandardMaterial color={dragon.accentColor} emissive={dragon.accentColor} emissiveIntensity={0.35} />
         </mesh>
+        <mesh position={[0.33, 0.08, 0.15]}>
+          <sphereGeometry args={[0.02, 10, 10]} />
+          <meshStandardMaterial color="#020617" />
+        </mesh>
+        <mesh position={[0.33, 0.08, -0.15]}>
+          <sphereGeometry args={[0.02, 10, 10]} />
+          <meshStandardMaterial color="#020617" />
+        </mesh>
+
+        {mustacheGeometries.map((geometry, index) => (
+          <mesh key={`mustache-${dragon.id}-${index}`} geometry={geometry}>
+            <meshStandardMaterial
+              color="#f8fafc"
+              emissive={dragon.accentColor}
+              emissiveIntensity={0.15}
+              roughness={0.35}
+            />
+          </mesh>
+        ))}
       </group>
     </group>
   )

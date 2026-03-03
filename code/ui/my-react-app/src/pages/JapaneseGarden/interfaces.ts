@@ -34,12 +34,15 @@ export interface DragonInstance {
   spawnTime: number
   color: string
   accentColor: string
-  orbitRadius: number
-  orbitSpeed: number
+  pathCenterX: number
+  pathCenterZ: number
+  circleRadius: number
+  circleDirection: 1 | -1
+  entryX: number
+  entryZ: number
+  exitX: number
+  exitZ: number
   altitude: number
-  angleOffset: number
-  direction: 1 | -1
-  flyAwayHeading: number
   wavePhase: number
   scale: number
 }
