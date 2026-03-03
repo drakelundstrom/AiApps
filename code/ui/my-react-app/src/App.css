@@ -244,9 +244,11 @@
 }
 
 .legacy-page-frame {
+  position: absolute;
+  inset: 0;
   inline-size: 100%;
   block-size: 100%;
-  padding-block-start: 64px;
+  overflow: hidden;
 }
 
 .legacy-iframe {
