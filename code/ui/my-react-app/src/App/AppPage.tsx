@@ -1,18 +1,16 @@
 ﻿import { useState } from 'react'
 import { Link, NavLink, Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import { QRCodeSVG } from 'qrcode.react'
-import FlappyBird from '../FlappyBird/FlappyBirdPage'
-import JapaneseGarden from '../JapaneseGarden/JapaneseGardenPage'
-import ColorSudoku from '../ColorSudoku/ColorSudokuPage'
-import TipCalculator from '../TipCalculator/TipCalculatorPage'
-import ImagePixelator from '../ImagePixelator/ImagePixelatorPage'
-import LeagueOfLegends from '../LeagueOfLegends/LeagueOfLegendsPage'
-import FortniteSkins from '../FortniteSkins/FortniteSkinsPage'
-import DCDeckBuilder from '../DCDeckBuilder/DCDeckBuilderPage'
-import DeckBuilderTierList from '../DeckBuilderTierList/DeckBuilderTierListPage'
-import VideoToGif from '../VideoToGif/VideoToGifPage'
-import BalloonPop from '../BalloonPop/BalloonPopPage'
-import Fishy from '../Fishy/FishyPage'
+import FlappyBird from '../pages/FlappyBird/FlappyBirdPage'
+import JapaneseGarden from '../pages/JapaneseGarden/JapaneseGardenPage'
+import ColorSudoku from '../pages/ColorSudoku/ColorSudokuPage'
+import TipCalculator from '../pages/TipCalculator/TipCalculatorPage'
+import ImagePixelator from '../pages/ImagePixelator/ImagePixelatorPage'
+import DCDeckBuilder from '../pages/DCDeckBuilder/DCDeckBuilderPage'
+import DeckBuilderTierList from '../pages/DeckBuilderTierList/DeckBuilderTierListPage'
+import VideoToGif from '../pages/VideoToGif/VideoToGifPage'
+import BalloonPop from '../pages/BalloonPop/BalloonPopPage'
+import Fishy from '../pages/Fishy/FishyPage'
 import './App.css'
 
 const NAV_ITEMS = [
@@ -22,8 +20,6 @@ const NAV_ITEMS = [
   { to: '/color-sudoku', label: 'Color Sudoku' },
   { to: '/tip-calculator', label: 'Tip Calculator' },
   { to: '/image-pixelator', label: 'Image Pixelator' },
-  { to: '/league-of-legends', label: 'League of Legends' },
-  { to: '/fortnite-skins', label: 'Fortnite Skins' },
   { to: '/dc-deck-builder', label: 'DC Deck Builder' },
   { to: '/deck-builder-tier-list', label: 'Deck Builder Tier List' },
   { to: '/video-to-gif', label: 'Video â†’ GIF' },
@@ -114,8 +110,6 @@ function HomePage() {
           <li><Link to="/color-sudoku">ðŸŽ¨ Color Sudoku</Link> â€” Sudoku with colors instead of numbers</li>
           <li><Link to="/tip-calculator">ðŸ’° Tip Calculator</Link> â€” Split bills with friends</li>
           <li><Link to="/image-pixelator">ðŸ“· Image Pixelator</Link> â€” Pixelate & compress photos</li>
-          <li><Link to="/league-of-legends">âš”ï¸ League of Legends</Link> â€” Scoreboard & Meta Tier List</li>
-          <li><Link to="/fortnite-skins">ðŸŽ® Fortnite Skins</Link> â€” Share & flex your locker</li>
           <li><Link to="/dc-deck-builder">ðŸƒ DC Deck Builder</Link> â€” Victory Point tracker for DC DBG</li>
           <li><Link to="/deck-builder-tier-list">ðŸ† Deck Builder Tier List</Link> â€” Rank the best deck-building games</li>
           <li><Link to="/video-to-gif">ðŸŽ¬ Video â†’ GIF</Link> â€” Convert video to GIF in-browser with WASM</li>
@@ -151,8 +145,6 @@ function App() {
         <Route path="/color-sudoku" element={<ColorSudoku />} />
         <Route path="/tip-calculator" element={<TipCalculator />} />
         <Route path="/image-pixelator" element={<ImagePixelator />} />
-        <Route path="/league-of-legends" element={<LeagueOfLegends />} />
-        <Route path="/fortnite-skins" element={<FortniteSkins />} />
         <Route path="/dc-deck-builder" element={<DCDeckBuilder />} />
         <Route path="/deck-builder-tier-list" element={<DeckBuilderTierList />} />
         <Route path="/video-to-gif" element={<VideoToGif />} />
