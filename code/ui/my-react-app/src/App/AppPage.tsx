@@ -22,7 +22,7 @@ const NAV_ITEMS = [
   { to: '/image-pixelator', label: 'Image Pixelator' },
   { to: '/dc-deck-builder', label: 'DC Deck Builder' },
   { to: '/deck-builder-tier-list', label: 'Deck Builder Tier List' },
-  { to: '/video-to-gif', label: 'Video â†’ GIF' },
+  { to: '/video-to-gif', label: 'Video → GIF' },
   { to: '/balloon-pop', label: 'Balloon Pop' },
   { to: '/fishy', label: 'Fishy' },
 ]
@@ -79,7 +79,7 @@ function HomePage() {
   return (
     <section className="home-page">
       <h1>Vibing with Drake</h1>
-      <p className="home-tagline">AI vibe-coded apps â€” built with GitHub Copilot & good vibes âœ¨</p>
+      <p className="home-tagline">AI vibe-coded apps — built with GitHub Copilot & good vibes ✨</p>
 
       <div className="home-bio">
         <h2>About Drake</h2>
@@ -94,7 +94,7 @@ function HomePage() {
           <a href="https://www.linkedin.com/in/drake-lundstrom/" target="_blank" rel="noopener noreferrer">
             LinkedIn
           </a>
-          {' Â· '}
+          {' • '}
           <a href="https://github.com/drakelundstrom" target="_blank" rel="noopener noreferrer">
             GitHub
           </a>
@@ -103,18 +103,18 @@ function HomePage() {
 
       <div className="home-apps">
         <h2>Apps</h2>
-        <p>Open the menu (â˜°) to explore:</p>
+        <p>Open the menu (☰) to explore:</p>
         <ul className="app-list">
-          <li><Link to="/flappy-bird">ðŸ¦ Flappy Bird</Link></li>
-          <li><Link to="/japanese-garden">ðŸŒ¸ Japanese Garden</Link> â€” 3D scene with toggleable sakura petals</li>
-          <li><Link to="/color-sudoku">ðŸŽ¨ Color Sudoku</Link> â€” Sudoku with colors instead of numbers</li>
-          <li><Link to="/tip-calculator">ðŸ’° Tip Calculator</Link> â€” Split bills with friends</li>
-          <li><Link to="/image-pixelator">ðŸ“· Image Pixelator</Link> â€” Pixelate & compress photos</li>
-          <li><Link to="/dc-deck-builder">ðŸƒ DC Deck Builder</Link> â€” Victory Point tracker for DC DBG</li>
-          <li><Link to="/deck-builder-tier-list">ðŸ† Deck Builder Tier List</Link> â€” Rank the best deck-building games</li>
-          <li><Link to="/video-to-gif">ðŸŽ¬ Video â†’ GIF</Link> â€” Convert video to GIF in-browser with WASM</li>
-          <li><Link to="/balloon-pop">ðŸŽˆ Balloon Pop</Link> â€” Distract cats, dogs & babies with popping balloons</li>
-          <li><Link to="/fishy">ðŸŸ Fishy</Link> â€” Creepy ocean survival game</li>
+          <li><Link to="/flappy-bird">🐦 Flappy Bird</Link></li>
+          <li><Link to="/japanese-garden">🌸 Japanese Garden</Link> — 3D scene with toggleable sakura petals</li>
+          <li><Link to="/color-sudoku">🎨 Color Sudoku</Link> — Sudoku with colors instead of numbers</li>
+          <li><Link to="/tip-calculator">💰 Tip Calculator</Link> — Split bills with friends</li>
+          <li><Link to="/image-pixelator">📷 Image Pixelator</Link> — Pixelate & compress photos</li>
+          <li><Link to="/dc-deck-builder">🃏 DC Deck Builder</Link> — Victory Point tracker for DC DBG</li>
+          <li><Link to="/deck-builder-tier-list">🏆 Deck Builder Tier List</Link> — Rank the best deck-building games</li>
+          <li><Link to="/video-to-gif">🎬 Video → GIF</Link> — Convert video to GIF in-browser with WASM</li>
+          <li><Link to="/balloon-pop">🎈 Balloon Pop</Link> — Distract cats, dogs & babies with popping balloons</li>
+          <li><Link to="/fishy">🐟 Fishy</Link> — Creepy ocean survival game</li>
         </ul>
       </div>
 
@@ -157,4 +157,3 @@ function App() {
 }
 
 export default App
-
