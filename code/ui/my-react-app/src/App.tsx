@@ -91,8 +91,8 @@ function HomePage() {
           Microsoft MVP in DevOps, Senior Full Stack Developer at{' '}
           <strong>Rogue Fitness</strong>, and community organizer in Columbus, OH.
           Drake co-organizes the Columbus Azure and DevOps meetups along with the
-          Global Azure and Intro to DevOps conferences. When he's not solving complex
-          software problems, he's mentoring, speaking, or volunteering with Rotary Youth Exchange.
+          Global Azure and Intro to DevOps conferences. When he&apos;s not solving complex
+          software problems, he&apos;s mentoring, speaking, or volunteering with Rotary Youth Exchange.
         </p>
         <p className="home-links">
           <a href="https://www.linkedin.com/in/drake-lundstrom/" target="_blank" rel="noopener noreferrer">

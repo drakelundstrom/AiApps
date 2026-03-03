@@ -16,7 +16,6 @@ function FlappyBird() {
   const gameLoopRef = useRef(null);
   const lastPipeSpawnRef = useRef(0);
   const [gameState, setGameState] = useState('idle'); // idle, playing, gameover
-  const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(() => {
     const saved = localStorage.getItem('flappyHighScore');
     return saved ? parseInt(saved, 10) : 0;
@@ -38,7 +37,6 @@ function FlappyBird() {
       birdRef.current = { y: GAME_HEIGHT / 2, velocity: JUMP_FORCE };
       pipesRef.current = [];
       scoreRef.current = 0;
-      setScore(0);
       lastPipeSpawnRef.current = 0;
     } else if (gameStateRef.current === 'playing') {
       birdRef.current.velocity = JUMP_FORCE;
@@ -48,7 +46,6 @@ function FlappyBird() {
       birdRef.current = { y: GAME_HEIGHT / 2, velocity: 0 };
       pipesRef.current = [];
       scoreRef.current = 0;
-      setScore(0);
     }
   }, []);
 
@@ -346,7 +343,6 @@ function FlappyBird() {
           if (!pipe.scored && pipe.x + PIPE_WIDTH < BIRD_X) {
             pipe.scored = true;
             scoreRef.current += 1;
-            setScore(scoreRef.current);
           }
 
           return pipe.x > -PIPE_WIDTH;

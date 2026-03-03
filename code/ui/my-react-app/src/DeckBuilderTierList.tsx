@@ -255,7 +255,7 @@ export default function DeckBuilderTierList() {
         <ul style={styles.legendList}>
           <li><strong>Drag & drop</strong> game cards between tiers to re-rank them</li>
           <li><strong>Click</strong> a game card to see details and move via buttons (mobile-friendly)</li>
-          <li>Games you've moved show a <span style={{ color: '#a78bfa' }}>↕</span> indicator</li>
+          <li>Games you&apos;ve moved show a <span style={{ color: '#a78bfa' }}>↕</span> indicator</li>
           <li>Use <strong>Reset</strong> to restore the default rankings</li>
         </ul>
       </div>

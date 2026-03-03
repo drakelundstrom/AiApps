@@ -492,7 +492,7 @@ export function startFishyGame({
     for (let i = 0; i < 30; i++) {
       const cx = ((i * 173.7 + timestamp * 0.02) % (W() + 100)) - 50;
       const cy = ((i * 113.3 + timestamp * 0.015) % (H() + 100)) - 50;
-      const r = 10 + Math.sin(timestamp * 0.001 + i) * (6 + d * 8);
+      const r = Math.max(0, 10 + Math.sin(timestamp * 0.001 + i) * (6 + d * 8));
       ctx.fillStyle = d > 0.5 ? `rgba(120,0,0,${0.3 * d})` : "#8dd8f8";
       ctx.beginPath();
       ctx.arc(cx, cy, r, 0, Math.PI * 2);

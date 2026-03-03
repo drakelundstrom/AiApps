@@ -1,11 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 
-/* ───────── helpers ───────── */
-
-function clamp(v, min, max) {
-  return Math.max(min, Math.min(max, v))
-}
-
 /* ───────── component ───────── */
 
 export default function ImagePixelator() {
@@ -19,7 +13,6 @@ export default function ImagePixelator() {
   const [outputSize, setOutputSize] = useState(null)
 
   const canvasRef = useRef(null)
-  const origCanvasRef = useRef(null)
   const videoRef = useRef(null)
   const imgRef = useRef(null)
   const fileInputRef = useRef(null)

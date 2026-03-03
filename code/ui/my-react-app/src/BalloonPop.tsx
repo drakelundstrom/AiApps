@@ -140,7 +140,6 @@ export default function BalloonPop() {
   const audioCtxRef = useRef(null);
   const stopMusicRef = useRef(null);
   const [started, setStarted] = useState(false);
-  const [score, setScore] = useState(0);
   const scoreRef = useRef(0);
   const sizeRef = useRef({ w: 800, h: 600 });
   const lastSpawnRef = useRef(0);
@@ -215,7 +214,6 @@ export default function BalloonPop() {
     if (popped && audioCtxRef.current) {
       playPop(audioCtxRef.current);
       scoreRef.current += 1;
-      setScore(scoreRef.current);
     }
   }, [started]);
 

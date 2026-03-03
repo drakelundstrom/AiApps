@@ -296,9 +296,9 @@ export default function DCDeckBuilder() {
             />
           </div>
 
-          {/* Player's cards */}
+          {/* Player&apos;s cards */}
           <h3 style={styles.sectionTitle}>
-            {activePlayer.name}'s Deck ({activePlayer.cards.reduce((s, c) => s + c.qty, 0)} cards)
+            {activePlayer.name}&apos;s Deck ({activePlayer.cards.reduce((s, c) => s + c.qty, 0)} cards)
           </h3>
           {activePlayer.cards.length === 0 ? (
             <p style={styles.muted}>No cards yet. Add cards from the catalog below!</p>
