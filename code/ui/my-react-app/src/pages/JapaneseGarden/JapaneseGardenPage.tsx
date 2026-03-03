@@ -10,6 +10,7 @@ import type {
   SakuraPetalsProps,
   Vector3Tuple,
 } from './interfaces'
+import { DragonSky } from './components/DragonSky'
 
 /* ───────── sakura petal particle system ───────── */
 
@@ -323,6 +324,7 @@ function GardenScene({ showPetals }: GardenSceneProps) {
       <BambooCluster position={[-7, 0, -2]} />
 
       {showPetals && <SakuraPetals count={400} />}
+      <DragonSky />
 
       <OrbitControls
         enablePan
@@ -331,7 +333,7 @@ function GardenScene({ showPetals }: GardenSceneProps) {
         maxPolarAngle={Math.PI / 2.05}
         minDistance={3}
         maxDistance={25}
-        target={[0, 1.5, 0]}
+        target={[0, 1.65, 0]}
       />
     </>
   )

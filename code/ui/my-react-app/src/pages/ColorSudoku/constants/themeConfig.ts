@@ -24,7 +24,7 @@ function buildColorTheme(
 
 const classicColors = ['#DB2777', '#DC2626', '#EA580C', '#D97706', '#16A34A', '#0891B2', '#2563EB', '#BF55EC', '#7C3AED']
 const classicNames = ['Pink', 'Red', 'Orange', 'Amber', 'Green', 'Cyan', 'Blue', 'Light Purple', 'Violet']
-const grayscaleColors = ['#FFFFFF', '#E5E5E5', '#CCCCCC', '#B3B3B3', '#999999', '#7F7F7F', '#666666', '#4D4D4D', '#000000']
+const grayscaleColors = ['#FFFFFF', '#DDDDDD', '#BBBBBB', '#999999', '#777777', '#555555', '#333333', '#111111', '#000000']
 const grayscaleNames = ['White', 'Cloud', 'Silver', 'Gray', 'Slate', 'Charcoal', 'Graphite', 'Onyx', 'Black']
 const emojiSymbols = ['⭐', '❤️', '🔥', '🍀', '💧', '🌙', '⚡', '🌸', '💎']
 const shapeSymbols = ['●', '■', '▲', '◆', '★', '✚', '♥', '➤', '⬡']
@@ -41,8 +41,8 @@ export const THEMES: Record<ThemeKey, SudokuTheme> = {
   pastel: buildColorTheme(
     '🌸 Pastel',
     'Soft pastel palette',
-    ['#FCA5A5', '#FDBA74', '#FDE68A', '#86EFAC', '#67E8F9', '#93C5FD', '#C4B5FD', '#F9A8D4', '#A7F3D0'],
-    ['Rose', 'Peach', 'Butter', 'Mint', 'Sky', 'Periwinkle', 'Lavender', 'Blush', 'Seafoam'],
+    ['#FCA5A5', '#FDBA74', '#FDE68A', '#A7F3D0', '#86EFAC', '#67E8F9', '#93C5FD', '#C4B5FD', '#F9A8D4'],
+    ['Rose', 'Peach', 'Butter', 'Seafoam', 'Mint', 'Sky', 'Periwinkle', 'Lavender', 'Blush'],
     { darkText: true },
   ),
   emoji: {

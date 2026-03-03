@@ -28,3 +28,22 @@ export interface PositionedScaledProps extends PositionedProps {
 export interface GardenSceneProps {
   showPetals: boolean
 }
+
+export interface DragonInstance {
+  id: number
+  spawnTime: number
+  color: string
+  accentColor: string
+  orbitRadius: number
+  orbitSpeed: number
+  altitude: number
+  angleOffset: number
+  direction: 1 | -1
+  flyAwayHeading: number
+  wavePhase: number
+  scale: number
+}
+
+export interface EasternDragonProps {
+  dragon: DragonInstance
+}
