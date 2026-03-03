@@ -3,12 +3,12 @@ import { startFishyGame } from './FishyGame'
 import './Fishy.css'
 
 export default function Fishy() {
-  const canvasRef = useRef(null)
-  const levelRef = useRef(null)
-  const hudRef = useRef(null)
-  const scoreRef = useRef(null)
-  const sizeRef = useRef(null)
-  const statusRef = useRef(null)
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const levelRef = useRef<HTMLDivElement | null>(null)
+  const hudRef = useRef<HTMLDivElement | null>(null)
+  const scoreRef = useRef<HTMLSpanElement | null>(null)
+  const sizeRef = useRef<HTMLSpanElement | null>(null)
+  const statusRef = useRef<HTMLSpanElement | null>(null)
 
   useEffect(() => {
     const cleanup = startFishyGame({
