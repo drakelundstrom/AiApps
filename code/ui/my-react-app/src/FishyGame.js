@@ -1,10 +1,17 @@
-(function fishyGame() {
-  const canvas = document.getElementById("fishy-canvas");
+export function startFishyGame({
+  canvas,
+  scoreEl,
+  sizeEl,
+  statusEl,
+  levelEl,
+  hudEl,
+}) {
+  if (!canvas || !scoreEl || !sizeEl || !statusEl || !levelEl || !hudEl) {
+    return () => {};
+  }
+
   const ctx = canvas.getContext("2d");
-  const scoreEl = document.getElementById("score");
-  const sizeEl = document.getElementById("size");
-  const statusEl = document.getElementById("status");
-  const levelEl = document.getElementById("level-bar");
+  if (!ctx) return () => {};
 
   /* ═══════════════════════════════════════════════════════
      STATE
@@ -43,12 +50,13 @@
     // tier 0.7+
     ["you are the reason they flee", "nothing will fill this emptiness", "your reflection has too many teeth",
      "consumption is not creation", "you've forgotten what hunger felt like — this is just habit",
-     "the biggest fish is always alone"],
+     "the biggest fish is always alone", "something is swimming behind your eyes"],
     // tier 0.9+
     ["there is nothing left to eat but yourself", "the ocean is empty because of you",
      "you won — was it worth becoming this?", "you can never go back to being small",
      "every fish you ate was the main character of its own story",
-     "the game doesn't end — you do"],
+     "the game doesn't end — you do", "you can feel gills opening in your throat",
+     "there are voices in the bubbles and they are yours"],
   ];
 
   function getWhisperTier() {
@@ -72,6 +80,8 @@
   let heartbeatInterval = null;
   let audioUnlocked = false;
   let audioInitFailed = false;
+  let frameId = null;
+  let isDestroyed = false;
 
   function initAudio() {
     if (audioCtx || audioInitFailed) return !!audioCtx;
@@ -83,7 +93,7 @@
 
     try {
       audioCtx = new AudioCtor();
-    } catch (err) {
+    } catch {
       audioInitFailed = true;
       return false;
     }
@@ -156,7 +166,7 @@
       }
       audioUnlocked = true;
       startHeartbeat();
-    } catch (err) {
+    } catch {
       // Keep the game playable if audio can't be resumed.
     }
   }
@@ -892,6 +902,27 @@
     }
   }
 
+  // Late-game hallucinations: fleeting shapes near the player.
+  function drawHallucinations(timestamp) {
+    const d = getDread();
+    if (d < 0.75) return;
+
+    const intensity = (d - 0.75) / 0.25;
+    const pulse = 0.35 + Math.sin(timestamp * 0.012) * 0.15;
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, pulse * intensity);
+    ctx.strokeStyle = `rgba(130, 0, 0, ${0.35 + intensity * 0.4})`;
+    ctx.lineWidth = 1 + intensity * 2;
+    ctx.beginPath();
+    ctx.arc(player.x + rand(-80, 80), player.y + rand(-70, 70), 18 + rand(0, 42), 0, Math.PI * 2);
+    ctx.stroke();
+    if (Math.random() < 0.2 + intensity * 0.45) {
+      ctx.fillStyle = `rgba(140, 0, 0, ${0.08 + intensity * 0.18})`;
+      ctx.fillRect(rand(0, W()), rand(0, H()), rand(20, 90), rand(2, 12));
+    }
+    ctx.restore();
+  }
+
   /* ═══════════════════════════════════════════════════════
      GAME LOGIC
      ═══════════════════════════════════════════════════════ */
@@ -918,11 +949,10 @@
 
   function updateHud() {
     const d = getDread();
-    const hud = document.querySelector(".hud");
 
     // Toggle horror CSS classes
-    hud.classList.toggle("dread", d >= 0.3 && d < 0.7);
-    hud.classList.toggle("abyss", d >= 0.7);
+    hudEl.classList.toggle("dread", d >= 0.3 && d < 0.7);
+    hudEl.classList.toggle("abyss", d >= 0.7);
     levelEl.classList.toggle("dread", d >= 0.3 && d < 0.7);
     levelEl.classList.toggle("abyss", d >= 0.7);
 
@@ -954,6 +984,7 @@
   let whisperTimer = 0;
 
   function step(timestamp) {
+    if (isDestroyed) return;
     if (!lastTime) lastTime = timestamp;
     const dt = Math.min((timestamp - lastTime) / 1000, 0.04);
     lastTime = timestamp;
@@ -1010,6 +1041,11 @@
           spawnWhisper();
           whisperTimer = 0;
         }
+      }
+
+      if (d > 0.82 && Math.random() < 0.012 + (d - 0.82) * 0.05) {
+        spawnWhisper();
+        shakeAmount += 2 + d * 4;
       }
 
       // Update fish
@@ -1094,6 +1130,7 @@
     drawCombo();
     drawVignette();
     drawStatic();
+    drawHallucinations(timestamp);
 
     // Game over overlay — changes with dread
     if (isGameOver) {
@@ -1185,7 +1222,7 @@
     }
 
     ctx.restore(); // pop shake
-    requestAnimationFrame(step);
+    frameId = requestAnimationFrame(step);
   }
 
   /* ═══════════════════════════════════════════════════════
@@ -1196,31 +1233,52 @@
     pointer.y = clientY;
   }
 
-  window.addEventListener("mousemove", (e) => onPointerMove(e.clientX, e.clientY));
-  window.addEventListener("touchmove", (e) => {
+  function onMouseMove(e) {
+    onPointerMove(e.clientX, e.clientY);
+  }
+
+  function onTouchMove(e) {
     e.preventDefault();
     const t = e.touches[0];
     if (t) onPointerMove(t.clientX, t.clientY);
-  }, { passive: false });
+  }
 
-  window.addEventListener("touchstart", (e) => {
+  function onTouchStart(e) {
     const t = e.touches[0];
     if (t) onPointerMove(t.clientX, t.clientY);
     unlockAudioFromGesture();
     if (isGameOver) resetGame();
-  }, { passive: true });
+  }
 
-  window.addEventListener("click", () => {
+  function onClick() {
     unlockAudioFromGesture();
     if (isGameOver) resetGame();
-  });
+  }
 
-  window.addEventListener("keydown", () => {
+  function onKeyDown() {
     unlockAudioFromGesture();
-  }, { passive: true });
+  }
+
+  window.addEventListener("mousemove", onMouseMove);
+  window.addEventListener("touchmove", onTouchMove, { passive: false });
+  window.addEventListener("touchstart", onTouchStart, { passive: true });
+  window.addEventListener("click", onClick);
+  window.addEventListener("keydown", onKeyDown, { passive: true });
 
   window.addEventListener("resize", resize);
   resize();
   updateHud();
-  requestAnimationFrame(step);
-})();
+  frameId = requestAnimationFrame(step);
+
+  return () => {
+    isDestroyed = true;
+    if (frameId) cancelAnimationFrame(frameId);
+    window.removeEventListener("mousemove", onMouseMove);
+    window.removeEventListener("touchmove", onTouchMove);
+    window.removeEventListener("touchstart", onTouchStart);
+    window.removeEventListener("click", onClick);
+    window.removeEventListener("keydown", onKeyDown);
+    window.removeEventListener("resize", resize);
+    stopAudio();
+  };
+}

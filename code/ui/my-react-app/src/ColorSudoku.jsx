@@ -171,20 +171,41 @@ function isSolved(board, solution) {
 
 /* ───────── animated hue helper ───────── */
 
-function useAnimatedHue() {
+function useAnimatedHue(enabled) {
   const [hueShift, setHueShift] = useState(0)
   const frameRef = useRef(null)
+  const lastTickRef = useRef(0)
+
   useEffect(() => {
+    if (!enabled) {
+      return
+    }
+
     let running = true
-    function tick() {
+    lastTickRef.current = 0
+    const prefersReducedMotion = typeof window !== 'undefined'
+      && window.matchMedia
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const isCoarsePointer = typeof window !== 'undefined'
+      && window.matchMedia
+      && window.matchMedia('(pointer: coarse)').matches
+    const minFrameMs = prefersReducedMotion ? 220 : isCoarsePointer ? 90 : 45
+
+    function tick(now) {
       if (!running) return
-      setHueShift(Date.now() * 0.03 % 360)
+      if (now - lastTickRef.current >= minFrameMs) {
+        lastTickRef.current = now
+        setHueShift((now * 0.03) % 360)
+      }
       frameRef.current = requestAnimationFrame(tick)
     }
     frameRef.current = requestAnimationFrame(tick)
-    return () => { running = false; cancelAnimationFrame(frameRef.current) }
-  }, [])
-  return hueShift
+    return () => {
+      running = false
+      cancelAnimationFrame(frameRef.current)
+    }
+  }, [enabled])
+  return enabled ? hueShift : 0
 }
 
 /* ───────── component ───────── */
@@ -198,9 +219,8 @@ export default function ColorSudoku() {
   const [selectedColor, setSelectedColor] = useState(null)
   const [won, setWon] = useState(false)
   const [showThemeMenu, setShowThemeMenu] = useState(false)
-  const hueShift = useAnimatedHue()
-
   const theme = THEMES[themeKey]
+  const hueShift = useAnimatedHue(theme.animated)
 
   const given = useMemo(
     () => puzzle.map((row) => row.map((v) => v !== 0)),
@@ -265,7 +285,7 @@ export default function ColorSudoku() {
   }, [selected, given, won])
 
   /** Compute cell background for current theme */
-  const getCellBg = (val, r, c) => {
+  const getCellBg = (val) => {
     if (val === 0) return 'rgba(30,30,45,0.7)'
     if (theme.animated) {
       const baseHue = (val - 1) * 40 + hueShift
@@ -360,7 +380,7 @@ export default function ColorSudoku() {
             const hasConflict = val !== 0 && getConflicts(board, r, c, val)
             const borderRight = (c + 1) % 3 === 0 && c < 8 ? '2.5px solid rgba(255,255,255,0.7)' : '1px solid rgba(255,255,255,0.12)'
             const borderBottom = (r + 1) % 3 === 0 && r < 8 ? '2.5px solid rgba(255,255,255,0.7)' : '1px solid rgba(255,255,255,0.12)'
-            const bg = getCellBg(val, r, c)
+            const bg = getCellBg(val)
             const cellContent = getCellContent(val, isGiven)
             const textColor = getCellTextColor(val)
             const glowColor = theme.glow && val !== 0 ? theme.colors[val - 1] : null
@@ -369,6 +389,10 @@ export default function ColorSudoku() {
               <div
                 key={`${r}-${c}`}
                 onClick={() => handleCellClick(r, c)}
+                onTouchStart={(e) => {
+                  e.preventDefault()
+                  handleCellClick(r, c)
+                }}
                 style={{
                   ...styles.cell,
                   borderRight,
@@ -418,6 +442,10 @@ export default function ColorSudoku() {
             <button
               key={i}
               onClick={() => handlePaletteClick(i + 1)}
+              onTouchStart={(e) => {
+                e.preventDefault()
+                handlePaletteClick(i + 1)
+              }}
               title={theme.names[i]}
               style={{
                 ...styles.paletteBtn,
@@ -437,7 +465,15 @@ export default function ColorSudoku() {
             </button>
           )
         })}
-        <button onClick={clearCell} style={styles.eraseBtn} title="Clear cell">
+        <button
+          onClick={clearCell}
+          onTouchStart={(e) => {
+            e.preventDefault()
+            clearCell()
+          }}
+          style={styles.eraseBtn}
+          title="Clear cell"
+        >
           ✕
         </button>
       </div>
@@ -573,6 +609,7 @@ const styles = {
     transition: 'background 0.18s, opacity 0.15s, transform 0.1s',
     position: 'relative',
     lineHeight: 1,
+    touchAction: 'manipulation',
   },
   palette: {
     display: 'flex',
@@ -592,6 +629,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     lineHeight: 1,
+    touchAction: 'manipulation',
   },
   eraseBtn: {
     width: 38,
@@ -607,6 +645,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     transition: 'transform 0.15s',
+    touchAction: 'manipulation',
   },
   legend: {
     display: 'flex',

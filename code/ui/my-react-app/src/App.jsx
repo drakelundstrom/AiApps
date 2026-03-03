@@ -12,6 +12,7 @@ import DCDeckBuilder from './DCDeckBuilder'
 import DeckBuilderTierList from './DeckBuilderTierList'
 import VideoToGif from './VideoToGif'
 import BalloonPop from './BalloonPop'
+import Fishy from './Fishy'
 import './App.css'
 
 const NAV_ITEMS = [
@@ -27,7 +28,7 @@ const NAV_ITEMS = [
   { to: '/deck-builder-tier-list', label: 'Deck Builder Tier List' },
   { to: '/video-to-gif', label: 'Video → GIF' },
   { to: '/balloon-pop', label: 'Balloon Pop' },
-  { to: '/legacy/fishy', label: 'Fishy (HTML/JS)' },
+  { to: '/fishy', label: 'Fishy' },
 ]
 
 function AppLayout() {
@@ -119,7 +120,7 @@ function HomePage() {
           <li><Link to="/deck-builder-tier-list">🏆 Deck Builder Tier List</Link> — Rank the best deck-building games</li>
           <li><Link to="/video-to-gif">🎬 Video → GIF</Link> — Convert video to GIF in-browser with WASM</li>
           <li><Link to="/balloon-pop">🎈 Balloon Pop</Link> — Distract cats, dogs & babies with popping balloons</li>
-          <li><Link to="/legacy/fishy">🐟 Fishy</Link> — Classic HTML/JS game</li>
+          <li><Link to="/fishy">🐟 Fishy</Link> — Creepy ocean survival game</li>
         </ul>
       </div>
 
@@ -136,14 +137,6 @@ function HomePage() {
         <p className="qr-url">{siteUrl}</p>
       </div>
     </section>
-  )
-}
-
-function LegacyHtmlPage({ src, title }) {
-  return (
-    <div className="legacy-page-frame">
-      <iframe src={src} title={title} className="legacy-iframe" />
-    </div>
   )
 }
 
@@ -164,10 +157,8 @@ function App() {
         <Route path="/deck-builder-tier-list" element={<DeckBuilderTierList />} />
         <Route path="/video-to-gif" element={<VideoToGif />} />
         <Route path="/balloon-pop" element={<BalloonPop />} />
-        <Route
-          path="/legacy/fishy"
-          element={<LegacyHtmlPage src="/legacy-pages/fishy/index.html" title="Fishy Game" />}
-        />
+        <Route path="/fishy" element={<Fishy />} />
+        <Route path="/legacy/fishy" element={<Navigate to="/fishy" replace />} />
       </Route>
     </Routes>
   )
