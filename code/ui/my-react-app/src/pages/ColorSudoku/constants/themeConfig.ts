@@ -24,6 +24,8 @@ function buildColorTheme(
 
 const classicColors = ['#DB2777', '#DC2626', '#EA580C', '#D97706', '#16A34A', '#0891B2', '#2563EB', '#BF55EC', '#7C3AED']
 const classicNames = ['Pink', 'Red', 'Orange', 'Amber', 'Green', 'Cyan', 'Blue', 'Light Purple', 'Violet']
+const grayscaleColors = ['#FFFFFF', '#E5E5E5', '#CCCCCC', '#B3B3B3', '#999999', '#7F7F7F', '#666666', '#4D4D4D', '#000000']
+const grayscaleNames = ['White', 'Cloud', 'Silver', 'Gray', 'Slate', 'Charcoal', 'Graphite', 'Onyx', 'Black']
 const emojiSymbols = ['⭐', '❤️', '🔥', '🍀', '💧', '🌙', '⚡', '🌸', '💎']
 const shapeSymbols = ['●', '■', '▲', '◆', '★', '✚', '♥', '➤', '⬡']
 
@@ -71,14 +73,20 @@ export const THEMES: Record<ThemeKey, SudokuTheme> = {
     content: (value: SudokuCell) => (value !== 0 ? String(value) : null),
     contentColor: (value: SudokuCell) => (value !== 0 ? classicColors[value - 1] : null),
   },
-  earth: buildColorTheme(
-    '🌍 Earth',
-    'Nature-inspired tones',
-    ['#92400E', '#B45309', '#A16207', '#166534', '#155E75', '#1E3A5F', '#581C87', '#9D174D', '#064E3B'],
-    ['Clay', 'Rust', 'Ochre', 'Forest', 'Deep Sea', 'Navy', 'Royal', 'Berry', 'Emerald'],
-  ),
+  grayscale: {
+    label: '⚪ Grayscale',
+    desc: 'White to black gradient',
+    colors: grayscaleColors,
+    names: grayscaleNames,
+    cell: (value: SudokuCell) => (value !== 0 ? grayscaleColors[value - 1] : null),
+    content: () => null,
+    contentColor: (value: SudokuCell) => {
+      if (value === 0) return null
+      return value <= 5 ? '#111827' : '#F9FAFB'
+    },
+  },
   rainbow: {
-    label: '🌈 Rainbow',
+    label: '🌈 Chaos',
     desc: 'Animated shifting hues',
     colors: ['#DB2777', '#DC2626', '#EA580C', '#D97706', '#16A34A', '#0891B2', '#2563EB', '#BF55EC', '#7C3AED'],
     names: classicNames,

@@ -11,7 +11,7 @@ export type ThemeKey =
   | 'emoji'
   | 'shapes'
   | 'numbers'
-  | 'earth'
+  | 'grayscale'
   | 'rainbow'
 
 export interface SudokuTheme {
