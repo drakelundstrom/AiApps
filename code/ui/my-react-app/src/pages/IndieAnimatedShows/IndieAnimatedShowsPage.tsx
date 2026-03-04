@@ -1,6 +1,7 @@
 import { useState, useMemo, type CSSProperties } from 'react'
 import type { Show, SortField, StatusFilter } from './interfaces'
 import { STUDIOS, INITIAL_SHOWS, ALL_TAGS } from './constants/data'
+import ShrekRage from './components/ShrekRage'
 
 /* ── helpers ───────────────────────────────────────────────────── */
 
@@ -299,7 +300,7 @@ const css = {
 
 type ViewTab = 'shows' | 'studios' | 'favorites'
 
-export default function IndieAnimatedShowsPage(): React.JSX.Element {
+export default function IndieAnimatedShowsPage() {
   const [shows, setShows] = useState<Show[]>(INITIAL_SHOWS)
   const [search, setSearch] = useState('')
   const [sortBy, setSortBy] = useState<SortField>('rating')
@@ -375,6 +376,9 @@ export default function IndieAnimatedShowsPage(): React.JSX.Element {
           <div style={css.statLabel}>Favorites</div>
         </div>
       </div>
+
+      {/* Shrek easter egg */}
+      <ShrekRage />
 
       {/* tabs */}
       <div style={css.tabBar}>
