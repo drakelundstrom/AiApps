@@ -45,8 +45,16 @@ export interface DragonInstance {
   altitude: number
   wavePhase: number
   scale: number
+  isFooDog?: boolean
 }
 
 export interface EasternDragonProps {
   dragon: DragonInstance
+}
+
+export interface ParticleTrail {
+  position: THREE.Vector3
+  age: number
+  maxAge: number
+  size: number
 }

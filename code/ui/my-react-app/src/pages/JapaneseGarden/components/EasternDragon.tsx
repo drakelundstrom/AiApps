@@ -8,7 +8,7 @@ import {
   DRAGON_EXIT_DURATION_SECONDS,
   DRAGON_LIFETIME_SECONDS,
 } from '../constants/dragonConfig'
-import type { DragonInstance, EasternDragonProps } from '../interfaces'
+import type { DragonInstance, EasternDragonProps, ParticleTrail } from '../interfaces'
 
 function getDragonPositionAtAge(age: number, dragon: DragonInstance): THREE.Vector3 {
   const time = Math.max(0, Math.min(age, DRAGON_LIFETIME_SECONDS))
@@ -47,7 +47,11 @@ function getDragonPositionAtAge(age: number, dragon: DragonInstance): THREE.Vect
 export function EasternDragon({ dragon }: EasternDragonProps) {
   const groupRef = useRef<THREE.Group | null>(null)
   const bodyRefs = useRef<Array<THREE.Mesh | null>>([])
+  const particleTrails = useRef<ParticleTrail[]>([])
+  const trailMeshRef = useRef<THREE.InstancedMesh | null>(null)
   const segmentIndices = useMemo(() => Array.from({ length: 15 }, (_, i) => i), [])
+  const dummy = useMemo(() => new THREE.Object3D(), [])
+  
   const mustacheGeometries = useMemo(() => {
     const makeCurve = (yOffset: number, zSign: 1 | -1) => new THREE.CatmullRomCurve3([
       new THREE.Vector3(0.45, yOffset, 0.08 * zSign),
@@ -70,7 +74,7 @@ export function EasternDragon({ dragon }: EasternDragonProps) {
     }
   }, [mustacheGeometries])
 
-  useFrame(({ clock }) => {
+  useFrame(({ clock }, delta) => {
     const group = groupRef.current
     if (!group) return
 
@@ -99,10 +103,67 @@ export function EasternDragon({ dragon }: EasternDragonProps) {
       mesh.position.y = Math.sin(age * 7 - i * 0.6 + dragon.wavePhase) * 0.07
       mesh.position.z = Math.cos(age * 4.5 - i * 0.35 + dragon.wavePhase) * 0.04
     })
+
+    // Update particle trails
+    const tailWorldPos = new THREE.Vector3(-4.5, 0, 0)
+    tailWorldPos.applyMatrix4(group.matrixWorld)
+    
+    if (Math.random() < 0.7) {
+      particleTrails.current.push({
+        position: tailWorldPos.clone(),
+        age: 0,
+        maxAge: 1.2 + Math.random() * 0.8,
+        size: 0.15 + Math.random() * 0.1,
+      })
+    }
+    
+    particleTrails.current = particleTrails.current.filter((p) => {
+      p.age += delta
+      return p.age < p.maxAge
+    })
+    
+    const trailMesh = trailMeshRef.current
+    if (trailMesh) {
+      particleTrails.current.forEach((p, i) => {
+        const life = p.age / p.maxAge
+        const scale = p.size * (1 - life) * dragon.scale
+        dummy.position.copy(p.position)
+        dummy.scale.setScalar(scale)
+        dummy.updateMatrix()
+        trailMesh.setMatrixAt(i, dummy.matrix)
+      })
+      for (let i = particleTrails.current.length; i < 100; i++) {
+        dummy.position.set(0, -1000, 0)
+        dummy.scale.setScalar(0.001)
+        dummy.updateMatrix()
+        trailMesh.setMatrixAt(i, dummy.matrix)
+      }
+      trailMesh.instanceMatrix.needsUpdate = true
+    }
   })
 
   return (
     <group ref={groupRef}>
+      {/* Particle trail */}
+      <instancedMesh ref={trailMeshRef} args={[undefined, undefined, 100]}>
+        <sphereGeometry args={[1, 8, 8]} />
+        <meshStandardMaterial
+          color={dragon.accentColor}
+          emissive={dragon.accentColor}
+          emissiveIntensity={0.8}
+          transparent
+          opacity={0.6}
+        />
+      </instancedMesh>
+
+      {/* Aura glow around dragon */}
+      <pointLight
+        color={dragon.accentColor}
+        intensity={0.8}
+        distance={4}
+        decay={2}
+      />
+
       {segmentIndices.map((i) => {
         const radius = Math.max(0.08, 0.34 - i * 0.014)
         const x = -i * 0.34
@@ -117,18 +178,37 @@ export function EasternDragon({ dragon }: EasternDragonProps) {
               <sphereGeometry args={[radius, 14, 12]} />
               <meshStandardMaterial
                 color={dragon.color}
-                roughness={0.35}
-                metalness={0.1}
+                roughness={0.25}
+                metalness={0.3}
                 emissive={dragon.accentColor}
-                emissiveIntensity={0.08}
+                emissiveIntensity={0.15}
               />
             </mesh>
 
             {i > 1 && i < 12 && i % 2 === 0 && (
-              <mesh position={[x, radius * 1.25, 0]} rotation={[Math.PI, 0, 0]}>
-                <coneGeometry args={[radius * 0.33, radius * 0.9, 4]} />
-                <meshStandardMaterial color={dragon.accentColor} roughness={0.45} />
-              </mesh>
+              <>
+                {/* Enhanced spines with glow */}
+                <mesh position={[x, radius * 1.25, 0]} rotation={[Math.PI, 0, 0]}>
+                  <coneGeometry args={[radius * 0.33, radius * 0.9, 4]} />
+                  <meshStandardMaterial
+                    color={dragon.accentColor}
+                    roughness={0.35}
+                    emissive={dragon.accentColor}
+                    emissiveIntensity={0.4}
+                  />
+                </mesh>
+                {/* Glow orbs on spines */}
+                <mesh position={[x, radius * 1.6, 0]}>
+                  <sphereGeometry args={[radius * 0.15, 8, 8]} />
+                  <meshStandardMaterial
+                    color={dragon.accentColor}
+                    emissive={dragon.accentColor}
+                    emissiveIntensity={1.2}
+                    transparent
+                    opacity={0.8}
+                  />
+                </mesh>
+              </>
             )}
           </group>
         )
@@ -137,40 +217,92 @@ export function EasternDragon({ dragon }: EasternDragonProps) {
       <group position={[0.28, 0, 0]}>
         <mesh>
           <sphereGeometry args={[0.34, 16, 14]} />
-          <meshStandardMaterial color={dragon.color} roughness={0.35} metalness={0.1} />
+          <meshStandardMaterial
+            color={dragon.color}
+            roughness={0.25}
+            metalness={0.3}
+            emissive={dragon.accentColor}
+            emissiveIntensity={0.1}
+          />
         </mesh>
 
         <mesh position={[0.38, -0.02, 0]} rotation={[0, 0, -Math.PI / 2]}>
           <coneGeometry args={[0.15, 0.5, 10]} />
-          <meshStandardMaterial color={dragon.color} roughness={0.35} metalness={0.1} />
+          <meshStandardMaterial
+            color={dragon.color}
+            roughness={0.25}
+            metalness={0.3}
+          />
         </mesh>
 
         <mesh position={[0.1, 0.2, 0.16]} rotation={[0.2, 0.2, 0.25]}>
           <coneGeometry args={[0.06, 0.24, 6]} />
-          <meshStandardMaterial color="#f8fafc" roughness={0.4} />
+          <meshStandardMaterial
+            color="#f8fafc"
+            roughness={0.3}
+            emissive="#fef3c7"
+            emissiveIntensity={0.2}
+          />
         </mesh>
         <mesh position={[0.1, 0.2, -0.16]} rotation={[-0.2, 0.2, 0.25]}>
           <coneGeometry args={[0.06, 0.24, 6]} />
-          <meshStandardMaterial color="#f8fafc" roughness={0.4} />
+          <meshStandardMaterial
+            color="#f8fafc"
+            roughness={0.3}
+            emissive="#fef3c7"
+            emissiveIntensity={0.2}
+          />
         </mesh>
 
+        {/* Enhanced eyes with stronger glow */}
         <mesh position={[0.22, 0.08, 0.15]}>
           <sphereGeometry args={[0.085, 14, 14]} />
-          <meshStandardMaterial color="#f8fafc" emissive="#f8fafc" emissiveIntensity={0.25} />
+          <meshStandardMaterial
+            color="#f8fafc"
+            emissive="#f8fafc"
+            emissiveIntensity={0.4}
+          />
         </mesh>
         <mesh position={[0.22, 0.08, -0.15]}>
           <sphereGeometry args={[0.085, 14, 14]} />
-          <meshStandardMaterial color="#f8fafc" emissive="#f8fafc" emissiveIntensity={0.25} />
+          <meshStandardMaterial
+            color="#f8fafc"
+            emissive="#f8fafc"
+            emissiveIntensity={0.4}
+          />
         </mesh>
 
         <mesh position={[0.29, 0.08, 0.15]}>
           <sphereGeometry args={[0.045, 12, 12]} />
-          <meshStandardMaterial color={dragon.accentColor} emissive={dragon.accentColor} emissiveIntensity={0.35} />
+          <meshStandardMaterial
+            color={dragon.accentColor}
+            emissive={dragon.accentColor}
+            emissiveIntensity={0.7}
+          />
         </mesh>
         <mesh position={[0.29, 0.08, -0.15]}>
           <sphereGeometry args={[0.045, 12, 12]} />
-          <meshStandardMaterial color={dragon.accentColor} emissive={dragon.accentColor} emissiveIntensity={0.35} />
+          <meshStandardMaterial
+            color={dragon.accentColor}
+            emissive={dragon.accentColor}
+            emissiveIntensity={0.7}
+          />
         </mesh>
+        
+        {/* Pupil glow */}
+        <pointLight
+          position={[0.32, 0.08, 0.15]}
+          color={dragon.accentColor}
+          intensity={0.3}
+          distance={1.5}
+        />
+        <pointLight
+          position={[0.32, 0.08, -0.15]}
+          color={dragon.accentColor}
+          intensity={0.3}
+          distance={1.5}
+        />
+        
         <mesh position={[0.33, 0.08, 0.15]}>
           <sphereGeometry args={[0.02, 10, 10]} />
           <meshStandardMaterial color="#020617" />
@@ -185,8 +317,8 @@ export function EasternDragon({ dragon }: EasternDragonProps) {
             <meshStandardMaterial
               color="#f8fafc"
               emissive={dragon.accentColor}
-              emissiveIntensity={0.15}
-              roughness={0.35}
+              emissiveIntensity={0.25}
+              roughness={0.25}
             />
           </mesh>
         ))}

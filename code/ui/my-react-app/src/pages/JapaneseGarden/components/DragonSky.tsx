@@ -5,16 +5,22 @@ import {
   DRAGON_LIFETIME_SECONDS,
   DRAGON_SPAWN_CHANCE_PER_SECOND,
   MAX_DRAGONS_ON_SCREEN,
+  FOO_DOG_COLOR_PALETTES,
 } from '../constants/dragonConfig'
 import type { DragonInstance } from '../interfaces'
 import { EasternDragon } from './EasternDragon'
+import { FooDog } from './FooDog'
 
 function createDragon(now: number, id: number, existing: DragonInstance[]): DragonInstance {
-  const used = new Set(existing.map((dragon) => dragon.color))
-  const availablePalettes = DRAGON_COLOR_PALETTES.filter((palette) => !used.has(palette.color))
+  // 1/10 chance for a foo dog
+  const isFooDog = Math.random() < 0.1
+  
+  const palettes = isFooDog ? FOO_DOG_COLOR_PALETTES : DRAGON_COLOR_PALETTES
+  const used = new Set(existing.filter((d) => d.isFooDog === isFooDog).map((dragon) => dragon.color))
+  const availablePalettes = palettes.filter((palette) => !used.has(palette.color))
   const selectedPalette = availablePalettes.length > 0
     ? availablePalettes[Math.floor(Math.random() * availablePalettes.length)]
-    : DRAGON_COLOR_PALETTES[Math.floor(Math.random() * DRAGON_COLOR_PALETTES.length)]
+    : palettes[Math.floor(Math.random() * palettes.length)]
 
   return {
     id,
@@ -32,6 +38,7 @@ function createDragon(now: number, id: number, existing: DragonInstance[]): Drag
     altitude: 6 + Math.random() * 5,
     wavePhase: Math.random() * Math.PI * 2,
     scale: 0.8 + Math.random() * 0.45,
+    isFooDog,
   }
 }
 
@@ -57,9 +64,13 @@ export function DragonSky() {
 
   return (
     <group>
-      {dragons.map((dragon) => (
-        <EasternDragon key={dragon.id} dragon={dragon} />
-      ))}
+      {dragons.map((dragon) => 
+        dragon.isFooDog ? (
+          <FooDog key={dragon.id} dragon={dragon} />
+        ) : (
+          <EasternDragon key={dragon.id} dragon={dragon} />
+        )
+      )}
     </group>
   )
 }
