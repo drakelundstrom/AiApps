@@ -11,6 +11,8 @@ import DeckBuilderTierList from '../pages/DeckBuilderTierList/DeckBuilderTierLis
 import VideoToGif from '../pages/VideoToGif/VideoToGifPage'
 import BalloonPop from '../pages/BalloonPop/BalloonPopPage'
 import Fishy from '../pages/Fishy/FishyPage'
+import IndieAnimatedShows from '../pages/IndieAnimatedShows/IndieAnimatedShowsPage'
+import AngryShrek from '../pages/AngryShrek/AngryShrekPage'
 import './App.css'
 
 const NAV_ITEMS = [
@@ -25,6 +27,8 @@ const NAV_ITEMS = [
   { to: '/video-to-gif', label: 'Video → GIF' },
   { to: '/balloon-pop', label: 'Balloon Pop' },
   { to: '/fishy', label: 'Fishy' },
+  { to: '/indie-animated-shows', label: 'Indie Animated Shows' },
+  { to: '/angry-shrek', label: 'Angry Shrek' },
 ]
 
 function AppLayout() {
@@ -115,6 +119,8 @@ function HomePage() {
           <li><Link to="/video-to-gif">🎬 Video → GIF</Link> — Convert video to GIF in-browser with WASM</li>
           <li><Link to="/balloon-pop">🎈 Balloon Pop</Link> — Distract cats, dogs & babies with popping balloons</li>
           <li><Link to="/fishy">🐟 Fishy</Link> — Creepy ocean survival game</li>
+          <li><Link to="/indie-animated-shows">🎞️ Indie Animated Shows</Link> — Curated indie animation studios & shows</li>
+          <li><Link to="/angry-shrek">💢 Angry Shrek</Link> — Click Shrek’s face and watch him lose it</li>
         </ul>
       </div>
 
@@ -150,6 +156,8 @@ function App() {
         <Route path="/video-to-gif" element={<VideoToGif />} />
         <Route path="/balloon-pop" element={<BalloonPop />} />
         <Route path="/fishy" element={<Fishy />} />
+        <Route path="/indie-animated-shows" element={<IndieAnimatedShows />} />
+        <Route path="/angry-shrek" element={<AngryShrek />} />
         <Route path="/legacy/fishy" element={<Navigate to="/fishy" replace />} />
       </Route>
     </Routes>
