@@ -20,6 +20,9 @@ export type Fish = {
   isRare: boolean
   pattern: number
   scaleAnim: number
+  isPredator?: boolean
+  eyeCount?: number
+  distorted?: boolean
 }
 
 export type Bubble = {
@@ -84,4 +87,5 @@ export type FishyState = {
   comboTimer: number
   shakeAmount: number
   whisperTimer: number
+  predatorTimer: number
 }

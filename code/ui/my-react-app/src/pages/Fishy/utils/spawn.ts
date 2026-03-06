@@ -20,12 +20,17 @@ export function generateSeaweeds(state: FishyState, viewportWidth: number): void
 
 export function spawnFish(state: FishyState, dimensions: GameDimensions): void {
   const fromLeft = Math.random() > 0.5
-  const maxSize = 30 + state.level * 10
+  const dread = getDread(state.eaten)
+  const maxSize = 30 + state.level * 7
   const size = rand(6, maxSize)
   const speedBase = rand(40, 140) / Math.max(size / 18, 1)
   const speed = speedBase * (1 + state.level * 0.06)
   const y = rand(30, dimensions.H() - 30)
   const isRare = Math.random() < 0.08
+
+  // Make fish look wrong at higher dread
+  const distorted = dread > 0.4 && Math.random() < dread * 0.6
+  const eyeCount = distorted ? (Math.random() < 0.5 ? 3 : Math.floor(Math.random() * 5) + 1) : 2
 
   let palette: string[]
   if (isRare) palette = FISH_PALETTES.rare
@@ -43,6 +48,32 @@ export function spawnFish(state: FishyState, dimensions: GameDimensions): void {
     isRare,
     pattern: Math.floor(Math.random() * 3),
     scaleAnim: 0,
+    distorted,
+    eyeCount,
+  }
+
+  state.fishes.push(fish)
+}
+
+export function spawnPredator(state: FishyState, dimensions: GameDimensions): void {
+  const fromLeft = Math.random() > 0.5
+  const size = state.player.size * (1.3 + Math.random() * 0.5)
+  const speed = rand(60, 100)
+  const y = rand(60, dimensions.H() - 60)
+
+  const fish: Fish = {
+    x: fromLeft ? -100 : dimensions.W() + 100,
+    y,
+    vx: fromLeft ? speed : -speed,
+    vy: rand(-15, 15),
+    size,
+    color: pickRandom(FISH_PALETTES.predator),
+    isRare: false,
+    pattern: 0,
+    scaleAnim: 0,
+    isPredator: true,
+    eyeCount: Math.floor(Math.random() * 7) + 3,
+    distorted: true,
   }
 
   state.fishes.push(fish)

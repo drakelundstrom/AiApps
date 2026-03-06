@@ -45,10 +45,11 @@ export function getSpawnInterval(level: number): number {
 }
 
 export function getDread(eaten: number): number {
-  return Math.min(1, eaten / 120)
+  return Math.min(1, eaten / 200)
 }
 
 export function getWhisperTier(dread: number): number {
+  if (dread >= 0.95) return 5
   if (dread >= 0.9) return 4
   if (dread >= 0.7) return 3
   if (dread >= 0.5) return 2

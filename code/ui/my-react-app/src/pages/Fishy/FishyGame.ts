@@ -11,7 +11,7 @@ import {
   drawVignette,
   drawWhispers,
 } from './utils/render'
-import { generateSeaweeds, spawnBubble, spawnFish, spawnParticles, spawnWhisper } from './utils/spawn'
+import { generateSeaweeds, spawnBubble, spawnFish, spawnParticles, spawnPredator, spawnWhisper } from './utils/spawn'
 
 export function startFishyGame({
   canvas,
@@ -46,6 +46,7 @@ export function startFishyGame({
     comboTimer: 0,
     shakeAmount: 0,
     whisperTimer: 0,
+    predatorTimer: 0,
   }
 
   const audio = createAudioState()
@@ -109,6 +110,7 @@ export function startFishyGame({
     state.spawnTimer = 0
     state.lastTime = 0
     state.whisperTimer = 0
+    state.predatorTimer = 0
     state.fishes.length = 0
     state.bubbles.length = 0
     state.particles.length = 0
@@ -187,12 +189,26 @@ export function startFishyGame({
 
       state.spawnTimer += dt
       if (state.spawnTimer >= getSpawnInterval(state.level)) {
-        const maxOnScreen = state.level >= 7 ? 7 : state.level >= 5 ? 9 : 11
+        const maxOnScreen = state.level >= 7 ? 18 : state.level >= 5 ? 22 : 25
         const count = state.level <= 2 && Math.random() < 0.2 ? 2 : 1
         for (let i = 0; i < count && state.fishes.length < maxOnScreen; i += 1) {
           spawnFish(state, { W, H })
         }
         state.spawnTimer = 0
+      }
+
+      // Win condition: Become the void
+      if (state.player.size >= 300 || state.score >= 4000) {
+        state.isGameOver = true
+        state.shakeAmount = 30
+        stopAudio(audio)
+        if (state.score > highScore) {
+          highScore = state.score
+          localStorage.setItem('fishyHighScore', String(highScore))
+        }
+        statusEl.textContent = 'you are the abyss now • nothing remains • tap to become again'
+        state.fishes = []
+        state.whispers = []
       }
 
       state.comboTimer -= dt
@@ -204,6 +220,17 @@ export function startFishyGame({
         if (state.whisperTimer >= freq && state.whispers.length < 3) {
           spawnWhisper(state, { W, H })
           state.whisperTimer = 0
+        }
+      }
+
+      // Spawn predators only when close to winning
+      const closeToWin = state.player.size >= 220 || state.score >= 3000
+      if (closeToWin) {
+        state.predatorTimer += dt
+        const predFreq = state.player.size >= 280 || state.score >= 3800 ? 15 : 25
+        if (state.predatorTimer >= predFreq) {
+          spawnPredator(state, { W, H })
+          state.predatorTimer = 0
         }
       }
 
@@ -253,7 +280,21 @@ export function startFishyGame({
             highScore = state.score
             localStorage.setItem('fishyHighScore', String(highScore))
           }
-          statusEl.textContent = dread > 0.5 ? 'consumed' : 'Game over! Tap to restart'
+          
+          // Different messages based on dread level
+          let gameOverMsg: string
+          if (dread < 0.2) {
+            gameOverMsg = 'Game over! Tap to restart'
+          } else if (dread < 0.4) {
+            gameOverMsg = 'A bigger fish • Tap to try again'
+          } else if (dread < 0.6) {
+            gameOverMsg = 'Swallowed whole • Tap to restart'
+          } else if (dread < 0.8) {
+            gameOverMsg = 'consumed by the deep'
+          } else {
+            gameOverMsg = 'the abyss claimed you • nothing escapes'
+          }
+          statusEl.textContent = gameOverMsg
           break
         }
       }
@@ -288,10 +329,27 @@ export function startFishyGame({
       ctx.fillStyle = '#8b0000'
       ctx.textAlign = 'center'
       ctx.font = '800 42px Georgia, serif'
-      ctx.fillText(state.eaten >= 100 ? 'You consumed everything.' : 'It consumed you.', cx, cy - 60)
+      
+      // Different messages based on dread level
+      let canvasMsg: string
+      if (state.eaten >= 100) {
+        canvasMsg = 'You consumed everything.'
+      } else if (dread < 0.2) {
+        canvasMsg = 'Better luck next time'
+      } else if (dread < 0.4) {
+        canvasMsg = 'A bigger fish'
+      } else if (dread < 0.6) {
+        canvasMsg = 'Swallowed whole'
+      } else if (dread < 0.8) {
+        canvasMsg = 'Consumed by the deep'
+      } else {
+        canvasMsg = 'The abyss claimed you'
+      }
+      
+      ctx.fillText(canvasMsg, cx, cy - 60)
       ctx.fillStyle = '#664444'
       ctx.font = 'italic 20px Georgia, serif'
-      ctx.fillText(`${state.eaten} lives ended`, cx, cy - 15)
+      ctx.fillText(dread < 0.4 ? `${state.eaten} fish eaten` : `${state.eaten} lives ended`, cx, cy - 15)
       ctx.fillStyle = '#553333'
       ctx.font = '600 16px system-ui, sans-serif'
       ctx.fillText(`Score: ${state.score} | Size: ${Math.round(state.player.size)}`, cx, cy + 20)
