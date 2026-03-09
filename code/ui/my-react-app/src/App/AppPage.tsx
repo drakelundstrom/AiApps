@@ -14,6 +14,7 @@ import Fishy from '../pages/Fishy/FishyPage'
 import IndieAnimatedShows from '../pages/IndieAnimatedShows/IndieAnimatedShowsPage'
 import AngryShrek from '../pages/AngryShrek/AngryShrekPage'
 import GeoGuesser from '../pages/GeoGuesser/GeoGuesserPage'
+import WaifuGenerator from '../pages/WaifuGenerator/WaifuGeneratorPage'
 import './App.css'
 
 const NAV_ITEMS = [
@@ -31,6 +32,7 @@ const NAV_ITEMS = [
   { to: '/indie-animated-shows', label: 'Indie Animated Shows' },
   { to: '/angry-shrek', label: 'Angry Shrek' },
   { to: '/geo-guesser', label: 'GeoGuesser' },
+  { to: '/waifu-generator', label: 'Waifu Generator' },
 ]
 
 function AppLayout() {
@@ -122,7 +124,8 @@ function HomePage() {
           <li><Link to="/balloon-pop">🎈 Balloon Pop</Link> — Distract cats, dogs & babies with popping balloons</li>
           <li><Link to="/fishy">🐟 Fishy</Link> — Creepy ocean survival game</li>
           <li><Link to="/indie-animated-shows">🎞️ Indie Animated Shows</Link> — Curated indie animation studios & shows</li>
-          <li><Link to="/angry-shrek">💢 Angry Shrek</Link> — Click Shrek’s face and watch him lose it</li>          <li><Link to="/geo-guesser">🌍 GeoGuesser</Link> — Guess famous landmarks on a world map</li>        </ul>
+          <li><Link to="/angry-shrek">💢 Angry Shrek</Link> — Click Shrek’s face and watch him lose it</li>          <li><Link to="/geo-guesser">🌍 GeoGuesser</Link> — Guess famous landmarks on a world map</li>
+          <li><Link to="/waifu-generator">💖 Waifu Generator</Link> — Find your anime waifu or husbando match</li>        </ul>
       </div>
 
       <div className="home-qr">
@@ -160,6 +163,7 @@ function App() {
         <Route path="/indie-animated-shows" element={<IndieAnimatedShows />} />
         <Route path="/angry-shrek" element={<AngryShrek />} />
         <Route path="/geo-guesser" element={<GeoGuesser />} />
+        <Route path="/waifu-generator" element={<WaifuGenerator />} />
         <Route path="/legacy/fishy" element={<Navigate to="/fishy" replace />} />
       </Route>
     </Routes>
