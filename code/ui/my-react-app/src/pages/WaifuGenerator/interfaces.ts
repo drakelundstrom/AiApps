@@ -64,6 +64,7 @@ export interface WaifuCharacter {
   emoji: string
   quote: string
   traits: string[]
+  imageUrl: string
 }
 
 /** Re-usable inline-style map */

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import { MapContainer, Marker, Polyline, Popup, TileLayer, useMapEvents } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -111,6 +111,11 @@ export default function GeoGuesserPage() {
   const nextRound = useCallback(() => {
     if (currentRound + 1 >= ROUNDS_PER_GAME) {
       setPhase('summary')
+      // Persist high score at transition time so we avoid setState inside an effect
+      if (totalScore > highScore) {
+        setHighScore(totalScore)
+        localStorage.setItem('geoguesser-highscore', String(totalScore))
+      }
     } else {
       setCurrentRound((r) => r + 1)
       setGuess(null)
@@ -119,15 +124,7 @@ export default function GeoGuesserPage() {
         mapRef.current.setView([20, 0], 2)
       }
     }
-  }, [currentRound])
-
-  /* Update high score on summary */
-  useEffect(() => {
-    if (phase === 'summary' && totalScore > highScore) {
-      setHighScore(totalScore)
-      localStorage.setItem('geoguesser-highscore', String(totalScore))
-    }
-  }, [phase, totalScore, highScore])
+  }, [currentRound, totalScore, highScore])
 
   const lastResult = results[results.length - 1] as RoundResult | undefined
   const lastReaction = lastResult ? getReaction((lastResult.score / MAX_SCORE_PER_ROUND) * 100) : null

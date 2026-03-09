@@ -61,7 +61,7 @@ function FilterSelect<T extends string>({ label, options, value, onChange }: Fil
         onChange={(e) => onChange(e.target.value as T)}
       >
         {options.map((o) => (
-          <option key={o.value} value={o.value}>
+          <option key={o.value} value={o.value} style={styles.selectOption}>
             {o.label}
           </option>
         ))}
@@ -172,7 +172,12 @@ export default function WaifuGeneratorPage() {
       {/* ── Result ───────────────────────────────────────────────── */}
       {result ? (
         <div key={animKey} style={styles.resultCard}>
-          <div style={styles.resultEmoji}>{result.emoji}</div>
+          <img
+            src={result.imageUrl}
+            alt={result.name}
+            style={styles.resultImage}
+            referrerPolicy="no-referrer"
+          />
           <div style={styles.resultName}>{result.name}</div>
           <div style={styles.resultSeries}>{result.series}</div>
           <p style={styles.resultQuote}>&ldquo;{result.quote}&rdquo;</p>

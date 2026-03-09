@@ -57,12 +57,17 @@ export const styles: WaifuStyles = {
   select: {
     padding: '0.55rem 0.75rem',
     borderRadius: '0.5rem',
-    border: '1px solid rgba(255,255,255,0.15)',
-    background: 'rgba(255,255,255,0.08)',
-    color: '#f0e6ff',
+    border: '1px solid rgba(255,255,255,0.25)',
+    background: '#2a1f3d',
+    color: '#ffffff',
     fontSize: '0.95rem',
+    fontWeight: 500,
     cursor: 'pointer',
     outline: 'none',
+  },
+  selectOption: {
+    background: '#2a1f3d',
+    color: '#ffffff',
   },
 
   /* ── generate button ──────────────────────────────────────────── */
@@ -93,6 +98,15 @@ export const styles: WaifuStyles = {
     border: '1px solid rgba(255,255,255,0.12)',
     boxShadow: '0 8px 32px rgba(0, 0, 0, 0.35)',
     animation: 'waifuFadeIn 0.45s ease-out',
+  },
+  resultImage: {
+    width: '220px',
+    height: '280px',
+    objectFit: 'cover' as const,
+    borderRadius: '1rem',
+    border: '2px solid rgba(192,132,252,0.3)',
+    boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+    marginBottom: '0.75rem',
   },
   resultEmoji: {
     fontSize: '4rem',

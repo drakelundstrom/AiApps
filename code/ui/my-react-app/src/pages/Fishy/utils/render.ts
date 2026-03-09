@@ -241,7 +241,6 @@ export function drawFish(renderContext: FishyRenderContext, fish: Fish | PlayerS
   // Draw predators as horrific non-fish entities
   if (isPredator) {
     const pulseTime = Date.now() * 0.003
-    const pulse = Math.sin(pulseTime) * 0.15 + 1
     
     // Dark shadowy mass
     ctx.shadowBlur = 25 + Math.sin(pulseTime * 2) * 10

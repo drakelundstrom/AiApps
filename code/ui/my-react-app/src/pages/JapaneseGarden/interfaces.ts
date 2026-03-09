@@ -1,3 +1,5 @@
+import type { Vector3 } from 'three'
+
 export type Vector3Tuple = [number, number, number]
 
 export interface SakuraPetalsProps {
@@ -53,7 +55,7 @@ export interface EasternDragonProps {
 }
 
 export interface ParticleTrail {
-  position: THREE.Vector3
+  position: Vector3
   age: number
   maxAge: number
   size: number
