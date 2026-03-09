@@ -18,7 +18,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '💙',
     quote: 'I love you… from the very beginning.',
     traits: ['Loyal', 'Hard-working', 'Twin maid'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/7/326377.jpg',
+    imageUrl: '/images/waifu/rem.jpg',
   },
   {
     name: 'Zero Two',
@@ -31,7 +31,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🌸',
     quote: 'I found you, my darling.',
     traits: ['Bold', 'Mysterious', 'Klaxosaur hybrid'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/11/346875.jpg',
+    imageUrl: '/images/waifu/zero-two.jpg',
   },
   {
     name: 'Asuka Langley',
@@ -44,7 +44,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🔥',
     quote: "Are you stupid?! Don't just stand there!",
     traits: ['Proud', 'Competitive', 'Eva pilot'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/3/369697.jpg',
+    imageUrl: '/images/waifu/asuka-langley.jpg',
   },
   {
     name: 'Hinata Hyuga',
@@ -57,7 +57,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🌙',
     quote: 'I will never go back on my word…',
     traits: ['Shy', 'Determined', 'Byakugan user'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/2/208969.jpg',
+    imageUrl: '/images/waifu/hinata-hyuga.jpg',
   },
   {
     name: 'Mikasa Ackerman',
@@ -70,7 +70,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '⚔️',
     quote: 'If I cannot, then I will die. But if I win, I live.',
     traits: ['Fierce', 'Protective', 'Ackerman bloodline'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/9/215563.jpg',
+    imageUrl: '/images/waifu/mikasa-ackerman.jpg',
   },
   {
     name: 'Tohru',
@@ -83,7 +83,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🐉',
     quote: 'I want to be with Kobayashi forever!',
     traits: ['Cheerful', 'Dragon form', 'Devoted'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/7/312927.jpg',
+    imageUrl: '/images/waifu/tohru.jpg',
   },
   {
     name: 'Yor Forger',
@@ -96,7 +96,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🗡️',
     quote: 'I will protect my family.',
     traits: ['Assassin', 'Caring mother', 'Strong'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/2/456855.jpg',
+    imageUrl: '/images/waifu/yor-forger.jpg',
   },
   {
     name: 'Marin Kitagawa',
@@ -109,7 +109,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '✨',
     quote: "I just wanna cosplay the characters I love!",
     traits: ['Outgoing', 'Cosplayer', 'Supportive'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/2/458277.jpg',
+    imageUrl: '/images/waifu/marin-kitagawa.jpg',
   },
   {
     name: 'Makima',
@@ -122,7 +122,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🐾',
     quote: 'I want a family.',
     traits: ['Manipulative', 'Powerful', 'Control Devil'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/3/474071.jpg',
+    imageUrl: '/images/waifu/makima.jpg',
   },
   {
     name: 'Nezuko Kamado',
@@ -135,7 +135,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🎋',
     quote: '…(muffled determination)',
     traits: ['Demon', 'Protective sister', 'Resilient'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/2/378254.jpg',
+    imageUrl: '/images/waifu/nezuko-kamado.jpg',
   },
   {
     name: 'Sakura Haruno',
@@ -148,7 +148,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🌸',
     quote: "I'm not going to be a burden anymore!",
     traits: ['Medical ninja', 'Strong punch', 'Determined'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/9/131317.jpg',
+    imageUrl: '/images/waifu/sakura-haruno.jpg',
   },
   {
     name: 'Erza Scarlet',
@@ -161,7 +161,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '⚔️',
     quote: 'All I need is the power to protect my comrades.',
     traits: ['Armor mage', 'Strict', 'Cake lover'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/15/176040.jpg',
+    imageUrl: '/images/waifu/erza-scarlet.jpg',
   },
   {
     name: 'C.C.',
@@ -174,7 +174,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🍕',
     quote: 'I am not alone. Because you are here.',
     traits: ['Immortal', 'Aloof', 'Pizza fiend'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/2/86218.jpg',
+    imageUrl: '/images/waifu/cc.jpg',
   },
   {
     name: 'Nami',
@@ -187,7 +187,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🗺️',
     quote: 'Luffy… help me.',
     traits: ['Navigator', 'Money-loving', 'Resourceful'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/2/282673.jpg',
+    imageUrl: '/images/waifu/nami.jpg',
   },
   {
     name: 'Nico Robin',
@@ -200,7 +200,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '📚',
     quote: 'I want to live!',
     traits: ['Archaeologist', 'Calm', 'Hana Hana no Mi'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/6/344015.jpg',
+    imageUrl: '/images/waifu/nico-robin.jpg',
   },
   {
     name: 'Violet Evergarden',
@@ -213,7 +213,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '✉️',
     quote: 'I want to know what "I love you" means.',
     traits: ['Auto Memory Doll', 'Former soldier', 'Eloquent'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/8/343800.jpg',
+    imageUrl: '/images/waifu/violet-evergarden.jpg',
   },
   {
     name: 'Raphtalia',
@@ -226,7 +226,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🦝',
     quote: 'I will always follow you, Shield Hero.',
     traits: ['Tanuki demi-human', 'Swordswoman', 'Devoted'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/14/353263.jpg',
+    imageUrl: '/images/waifu/raphtalia.jpg',
   },
   {
     name: 'Ochaco Uraraka',
@@ -239,7 +239,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🌟',
     quote: "I'll become a hero for my parents' sake!",
     traits: ['Zero Gravity', 'Cheerful', 'Hard-working'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/12/300121.jpg',
+    imageUrl: '/images/waifu/ochaco-uraraka.jpg',
   },
   {
     name: 'Megumin',
@@ -252,7 +252,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '💥',
     quote: 'EXPLOSION!',
     traits: ['Arch Wizard', 'Chuunibyou', 'One-trick pony'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/16/318545.jpg',
+    imageUrl: '/images/waifu/megumin.jpg',
   },
   {
     name: 'Saber (Artoria)',
@@ -265,7 +265,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '👑',
     quote: 'I ask of you: are you my master?',
     traits: ['King Arthur', 'Noble', 'Excalibur wielder'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/8/335602.jpg',
+    imageUrl: '/images/waifu/saber.jpg',
   },
   {
     name: '2B',
@@ -278,7 +278,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '⚙️',
     quote: 'Emotions are prohibited.',
     traits: ['Android', 'Combat model', 'Stoic'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/4/345321.jpg',
+    imageUrl: '/images/waifu/2b.jpg',
   },
   {
     name: 'Tifa Lockhart',
@@ -291,7 +291,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🥊',
     quote: "Words aren't the only way to tell someone how you feel.",
     traits: ['Martial artist', 'Bar owner', 'Supportive'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/4/260587.jpg',
+    imageUrl: '/images/waifu/tifa-lockhart.jpg',
   },
   {
     name: 'Yoruichi Shihoin',
@@ -304,7 +304,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🐱',
     quote: 'Did I surprise you?',
     traits: ['Flash Goddess', 'Cat form', 'Playful'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/8/88413.jpg',
+    imageUrl: '/images/waifu/yoruichi-shihoin.jpg',
   },
   {
     name: 'Bulma',
@@ -317,7 +317,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🔧',
     quote: "I'm a genius, of course I can figure it out!",
     traits: ['Inventor', 'Sassy', 'Capsule Corp heiress'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/15/366957.jpg',
+    imageUrl: '/images/waifu/bulma.jpg',
   },
   {
     name: 'Android 18',
@@ -330,7 +330,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '⚡',
     quote: "Don't get in my way.",
     traits: ['Android', 'Deadpan', 'Powerful'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/4/107295.jpg',
+    imageUrl: '/images/waifu/android-18.jpg',
   },
   // ── Boys ───────────────────────────────────────────────────────────
   {
@@ -344,7 +344,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🧹',
     quote: "Give up on your dreams and die… or fight. It's your call.",
     traits: ['Clean freak', 'Strongest soldier', 'Short king'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/2/241413.jpg',
+    imageUrl: '/images/waifu/levi-ackerman.jpg',
   },
   {
     name: 'Gojo Satoru',
@@ -357,7 +357,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '👁️',
     quote: "Throughout heaven and earth, I alone am the honored one.",
     traits: ['Infinity', 'Blindfold', 'Six Eyes'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/15/422168.jpg',
+    imageUrl: '/images/waifu/gojo-satoru.jpg',
   },
   {
     name: 'Tanjiro Kamado',
@@ -370,7 +370,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🔥',
     quote: 'I will never give up!',
     traits: ['Kind', 'Water & Sun breather', 'Hanafuda earrings'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/6/386735.jpg',
+    imageUrl: '/images/waifu/tanjiro-kamado.jpg',
   },
   {
     name: 'Spike Spiegel',
@@ -383,7 +383,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🚀',
     quote: "I'm not going there to die. I'm going to find out if I'm really alive.",
     traits: ['Bounty hunter', 'Jeet Kune Do', 'Laid-back'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/4/50197.jpg',
+    imageUrl: '/images/waifu/spike-spiegel.jpg',
   },
   {
     name: 'Roronoa Zoro',
@@ -396,7 +396,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🗡️',
     quote: 'Nothing happened.',
     traits: ['Three-sword style', 'Gets lost', 'Loyal'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/3/100534.jpg',
+    imageUrl: '/images/waifu/roronoa-zoro.jpg',
   },
   {
     name: 'Todoroki Shoto',
@@ -409,7 +409,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '❄️',
     quote: "I'll become a hero my own way.",
     traits: ['Half-cold Half-hot', 'Burn scar', 'Reserved'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/15/284497.jpg',
+    imageUrl: '/images/waifu/todoroki-shoto.jpg',
   },
   {
     name: 'Kakashi Hatake',
@@ -422,7 +422,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '📖',
     quote: 'In the ninja world, those who break the rules are trash…',
     traits: ['Copy ninja', 'Always late', 'Sharingan'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/7/284129.jpg',
+    imageUrl: '/images/waifu/kakashi-hatake.jpg',
   },
   {
     name: 'Itachi Uchiha',
@@ -435,7 +435,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🌀',
     quote: "You don't become Hokage to be acknowledged. Those acknowledged become Hokage.",
     traits: ['Sharingan master', 'Self-sacrificing', 'Prodigy'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/9/284122.jpg',
+    imageUrl: '/images/waifu/itachi-uchiha.jpg',
   },
   {
     name: 'Vegeta',
@@ -448,7 +448,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '👑',
     quote: 'I am the prince of all Saiyans!',
     traits: ['Saiyan prince', 'Pride', 'Rival'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/12/346741.jpg',
+    imageUrl: '/images/waifu/vegeta.jpg',
   },
   {
     name: 'Killua Zoldyck',
@@ -461,7 +461,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '⚡',
     quote: 'Gon, you are light.',
     traits: ['Assassin family', 'Godspeed', 'Best friend'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/2/327920.jpg',
+    imageUrl: '/images/waifu/killua-zoldyck.jpg',
   },
   {
     name: 'Howl Jenkins',
@@ -474,7 +474,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🏰',
     quote: "I see no point in living if I can't be beautiful.",
     traits: ['Wizard', 'Vain', 'Heart of gold'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/12/76702.jpg',
+    imageUrl: '/images/waifu/howl-jenkins.jpg',
   },
   {
     name: 'Edward Elric',
@@ -487,7 +487,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🔩',
     quote: "WHO ARE YOU CALLING A BEAN-SIZED ULTRA-SHRIMP?!",
     traits: ['Alchemist', 'Automail', 'Short temper'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/9/72533.jpg',
+    imageUrl: '/images/waifu/edward-elric.jpg',
   },
   {
     name: 'Sasuke Uchiha',
@@ -500,7 +500,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🌑',
     quote: "I have long since closed my eyes… my only goal is in the darkness.",
     traits: ['Avenger', 'Sharingan', 'Lone wolf'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/9/131319.jpg',
+    imageUrl: '/images/waifu/sasuke-uchiha.jpg',
   },
   {
     name: 'Nanami Kento',
@@ -513,7 +513,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '🕐',
     quote: "I'm a salaryman who just happens to be a sorcerer.",
     traits: ['Office hours', 'Ratio technique', 'Bread lover'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/3/422649.jpg',
+    imageUrl: '/images/waifu/nanami-kento.jpg',
   },
   {
     name: 'Guts',
@@ -526,7 +526,7 @@ export const WAIFU_ROSTER: WaifuCharacter[] = [
     emoji: '⚔️',
     quote: "If you're always worried about crushing the ants beneath you, you won't be able to walk.",
     traits: ['Black Swordsman', 'Dragonslayer', 'Unyielding'],
-    imageUrl: 'https://cdn.myanimelist.net/images/characters/8/266045.jpg',
+    imageUrl: '/images/waifu/guts.jpg',
   },
 ]
 

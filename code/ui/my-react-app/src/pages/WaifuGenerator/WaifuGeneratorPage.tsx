@@ -176,7 +176,6 @@ export default function WaifuGeneratorPage() {
             src={result.imageUrl}
             alt={result.name}
             style={styles.resultImage}
-            referrerPolicy="no-referrer"
           />
           <div style={styles.resultName}>{result.name}</div>
           <div style={styles.resultSeries}>{result.series}</div>
