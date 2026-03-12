@@ -1,3 +1,5 @@
+// Deploys an Azure Static Web App (Free tier) to host the React UI.
+// The app includes pages like CompressedCalendar, Fishy, FlappyBird, and more.
 param location string = resourceGroup().location
 param webAppName string
 
