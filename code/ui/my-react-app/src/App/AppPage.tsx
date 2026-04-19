@@ -15,6 +15,7 @@ import IndieAnimatedShows from '../pages/IndieAnimatedShows/IndieAnimatedShowsPa
 import AngryShrek from '../pages/AngryShrek/AngryShrekPage'
 import GeoGuesser from '../pages/GeoGuesser/GeoGuesserPage'
 import CompressedCalendar from '../pages/CompressedCalendar/CompressedCalendarPage'
+import GoatSimulator from '../pages/GoatSimulator/GoatSimulatorPage'
 import './App.css'
 
 const NAV_ITEMS = [
@@ -33,6 +34,7 @@ const NAV_ITEMS = [
   { to: '/angry-shrek', label: 'Angry Shrek' },
   { to: '/geo-guesser', label: 'GeoGuesser' },
   { to: '/compressed-calendar', label: 'Compressed Calendar' },
+  { to: '/goat-simulator', label: 'Goat Simulator' },
 ]
 
 function AppLayout() {
@@ -125,8 +127,7 @@ function HomePage() {
           <li><Link to="/fishy">🐟 Fishy</Link> — Creepy ocean survival game</li>
           <li><Link to="/indie-animated-shows">🎞️ Indie Animated Shows</Link> — Curated indie animation studios & shows</li>
           <li><Link to="/angry-shrek">💢 Angry Shrek</Link> — Click Shrek’s face and watch him lose it</li>          <li><Link to="/geo-guesser">🌍 GeoGuesser</Link> — Guess famous landmarks on a world map</li>
-          <li><Link to="/compressed-calendar">📅 Compressed Calendar</Link> — Week view that hides empty time blocks</li>
-        </ul>
+          <li><Link to="/compressed-calendar">📅 Compressed Calendar</Link> — Week view that hides empty time blocks</li>          <li><Link to="/goat-simulator">🐐 Goat Simulator</Link> — Fully featured 3D goat simulator game</li>        </ul>
       </div>
 
       <div className="home-qr">
@@ -165,6 +166,7 @@ function App() {
         <Route path="/angry-shrek" element={<AngryShrek />} />
         <Route path="/geo-guesser" element={<GeoGuesser />} />
         <Route path="/compressed-calendar" element={<CompressedCalendar />} />
+        <Route path="/goat-simulator" element={<GoatSimulator />} />
         <Route path="/legacy/fishy" element={<Navigate to="/fishy" replace />} />
       </Route>
     </Routes>
